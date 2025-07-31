@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxxlmxhb5u7uo"]
+
+[ext_resource type="Texture2D" uid="uid://c0bv77yp8nqig" path="res://icon.svg" id="1_1k071"]
+[ext_resource type="Script" uid="uid://bdtqbxhggg64n" path="res://src/menu/main_menu.gd" id="1_g2ne3"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g2ne3")
+
+[node name="Title" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+offset_left = -2.0
+offset_top = 108.0
+offset_right = 698.0
+offset_bottom = 185.0
+bbcode_enabled = true
+text = "[font_size=56][center][i]Loop It Up, Cowboy![/i][/center][/font_size]"
+fit_content = true
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+offset_left = 134.0
+offset_top = 327.0
+offset_right = 384.0
+offset_bottom = 477.0
+size_flags_horizontal = 4
+
+[node name="PlayButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Play"
+
+[node name="CreditsButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(905, 405)
+texture = ExtResource("1_1k071")
+
+[connection signal="pressed" from="Buttons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Buttons/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]

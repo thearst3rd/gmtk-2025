@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Loop It Up, Cowboy!"
+run/main_scene="uid://bxxlmxhb5u7uo"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://src/scripts/global.gd"
 
 [rendering]
 
