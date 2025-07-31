@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://4qucv6ngvo5l"]
+
+[ext_resource type="Script" uid="uid://b0pnwx1gh3rg2" path="res://src/menu/credits_menu.gd" id="1_o08hf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o08hf"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.205117, 0.205117, 0.205117, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="CreditsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o08hf")
+
+[node name="BackButton" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 24
+text = "Back"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center][font_size=64][b]Loop It Up, Cowboy![/b][/font_size]
+
+[font_size=24]Created for GMTK Game Jam 2025[/font_size]
+
+[font_size=32]Terry Hearst
+Andrew Moore
+Kyle Reese[/font_size][/center]"
+fit_content = true
+
+[node name="LicensesButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -41.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "View All Licenses"
+
+[node name="LicensesPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o08hf")
+
+[node name="MarginContainer" type="MarginContainer" parent="LicensesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LicensesLabel" type="RichTextLabel" parent="LicensesPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="LicensesButton" to="." method="_on_licenses_button_pressed"]

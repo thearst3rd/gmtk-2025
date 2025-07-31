@@ -20,7 +20,7 @@ offset_top = 108.0
 offset_right = 698.0
 offset_bottom = 185.0
 bbcode_enabled = true
-text = "[font_size=56][center][i]Loop It Up, Cowboy![/i][/center][/font_size]"
+text = "[font_size=56][center][b]Loop It Up, Cowboy![/b][/center][/font_size]"
 fit_content = true
 
 [node name="Buttons" type="VBoxContainer" parent="."]
