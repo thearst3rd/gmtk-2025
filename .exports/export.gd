@@ -10,10 +10,10 @@ func _init() -> void:
 	clean_directory("linux")
 	clean_directory("mac")
 
-	await export_web()
-	await export_windows()
-	await export_linux()
-	await export_mac()
+	export_web()
+	export_windows()
+	export_linux()
+	export_mac()
 
 	quit()
 
@@ -30,10 +30,12 @@ func clean_directory(name: String) -> void:
 
 
 func export_preset(preset_name: String) -> void:
-	#OS.execute(OS.get_executable_path(), ["--headless", "--export-release", preset_name])
+	# I couldn't find a way to directly export a project via GDScript, so I invoke Godot to export instead
 	var pid := OS.create_instance(["--headless", "--export-release", preset_name])
+	# We shouldn't use OS.execute to create new Godot instances on MacOS (see docs for OS.get_executable_path), so we
+	# use OS.create_instance instead. OS.create_instance is not blocking however, so we have to block ourselves.
 	while OS.is_process_running(pid):
-		await create_timer(0.001).timeout
+		OS.delay_msec(100)
 
 
 func zip_directory(name: String) -> void:
@@ -59,20 +61,20 @@ func zip_directory(name: String) -> void:
 
 func export_web() -> void:
 	print("Exporting Web")
-	await export_preset("Web")
+	export_preset("Web")
 	DirAccess.rename_absolute("res://.exports/web/gmtk-2025.html", "res://.exports/web/index.html")
 	zip_directory("web")
 
 
 func export_windows() -> void:
 	print("Exporting Windows")
-	await export_preset("Windows Desktop")
+	export_preset("Windows Desktop")
 	zip_directory("windows")
 
 
 func export_linux() -> void:
 	print("Exporting Linux")
-	await export_preset("Linux")
+	export_preset("Linux")
 	zip_directory("linux")
 
 
