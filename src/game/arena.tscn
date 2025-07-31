@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0rybmr68nlu2"]
+
+[ext_resource type="PackedScene" uid="uid://fhqqde4xxf6l" path="res://src/game/player.tscn" id="1_p3gke"]
+[ext_resource type="PackedScene" uid="uid://dvr4gp8bis72j" path="res://src/menu/pause_menu.tscn" id="2_fpc82"]
+
+[node name="Arena" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_p3gke")]
+position = Vector2(451, 203)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
+visible = false

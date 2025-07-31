@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvr4gp8bis72j"]
+
+[ext_resource type="Script" uid="uid://fjwvlfx1q1m0" path="res://src/menu/pause_menu.gd" id="1_ld5fl"]
+
+[node name="PauseMenu" type="ColorRect"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+script = ExtResource("1_ld5fl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 108.0
+offset_right = 395.0
+offset_bottom = 180.0
+bbcode_enabled = true
+text = "[font_size=52][i]Paused[/i][/font_size]"
+fit_content = true
+scroll_active = false
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 0
+offset_left = 134.0
+offset_top = 362.0
+offset_right = 384.0
+offset_bottom = 461.0
+
+[node name="ResumeButton" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit to Menu"
+
+[connection signal="pressed" from="Buttons/ResumeButton" to="." method="unpause"]
+[connection signal="pressed" from="Buttons/QuitButton" to="." method="quit"]
