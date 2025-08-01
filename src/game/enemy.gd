@@ -35,8 +35,6 @@ func is_inside_polygon(points: Array[Vector2]) -> bool:
 		position + collision_rect.position + collision_rect.size
 	]
 
-	print("Enemy position: ", position)
-
 	var num_points_inside := 0
 	for point in rect_points:
 		# The points passed in are in local space, but the points in the collision rect are in
