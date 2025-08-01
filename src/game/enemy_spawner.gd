@@ -1,10 +1,8 @@
 extends Node
 
 
-const MIN_SPAWN_DISTANCE := 700.0
-const MAX_SPAWN_DISTANCE := 1200.0
-
-
+@export var MIN_SPAWN_DISTANCE := 700.0
+@export var MAX_SPAWN_DISTANCE := 1200.0
 var enemy := preload("res://src/game/enemy.tscn")
 var player: CharacterBody2D
 var spawn_per_second := 1
