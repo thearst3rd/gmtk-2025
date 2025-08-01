@@ -9,7 +9,7 @@ func _ready() -> void:
 	position = -0.5 * size
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
 	var viewport_size = get_viewport_rect().size
 
