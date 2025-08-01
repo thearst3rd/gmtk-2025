@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=5 format=3 uid="uid://b0rybmr68nlu2"]
 
+[ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
 [ext_resource type="PackedScene" uid="uid://fhqqde4xxf6l" path="res://src/game/player.tscn" id="1_p3gke"]
 [ext_resource type="PackedScene" uid="uid://dvr4gp8bis72j" path="res://src/menu/pause_menu.tscn" id="2_fpc82"]
+[ext_resource type="PackedScene" uid="uid://cuk2s5krjoqwi" path="res://src/game/cactus.tscn" id="3_0pbf2"]
 
 [node name="Arena" type="Node2D"]
+
+[node name="InfiniteBackground" parent="." instance=ExtResource("1_44jrx")]
+max_size = 2000.0
 
 [node name="Player" parent="." instance=ExtResource("1_p3gke")]
 position = Vector2(451, 203)
@@ -12,3 +17,6 @@ position = Vector2(451, 203)
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
 visible = false
+
+[node name="Cactus" parent="." instance=ExtResource("3_0pbf2")]
+position = Vector2(351, 356)

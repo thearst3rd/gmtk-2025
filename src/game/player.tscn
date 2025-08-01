@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_amex0"]
 radius = 60.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_7dijx")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -14,3 +14,5 @@ texture = ExtResource("1_amex0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_amex0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
