@@ -1,8 +1,8 @@
 extends Node
 
 
-const MIN_SPAWN_DISTANCE = 700
-const MAX_SPAWN_DISTANCE = 1200
+const MIN_SPAWN_DISTANCE := 700.0
+const MAX_SPAWN_DISTANCE := 1200.0
 
 
 var enemy := preload("res://src/game/enemy.tscn")
