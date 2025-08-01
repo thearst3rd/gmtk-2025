@@ -65,6 +65,7 @@ shape = SubResource("CapsuleShape2D_fagre")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="DrawController" parent="." instance=ExtResource("3_fagre")]
+MAXIMUM_LINE_DISTANCE = 600.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
