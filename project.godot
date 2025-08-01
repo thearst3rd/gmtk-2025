@@ -25,10 +25,6 @@ window/size/viewport_width=640
 window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 
-[editor]
-
-run/main_run_args="--resolution 1920x1440"
-
 [global_group]
 
 Player=""
