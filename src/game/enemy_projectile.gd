@@ -2,14 +2,11 @@ extends Node2D
 
 
 signal enemy_respawn(pos: Vector2)
-signal enemy_hit(other: Node2D)
+signal object_hit(other: Node2D)
 
 
 @export var MAX_DISTANCE := 250
 @export var SPEED := 20
-
-
-@onready var distance_traveled := 0
 
 
 var initial_position: Vector2
@@ -27,5 +24,5 @@ func on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		return
 	# Fancy particle effects, etc.
-	enemy_hit.emit(body)
+	object_hit.emit(body)
 	queue_free()

@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	game_time += delta
 
 
-func on_line_complete(points: Array[Vector2], penalty: float) -> void:
+func on_line_complete(points: Array[Vector2], _penalty: float) -> void:
 	var enemy_captured := false
 
 	for node in $Enemies.get_children():
@@ -33,16 +33,17 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 	if enemy_captured:
 		player.draw_controller.active = false
 
+
 func on_player_shoot(direction: Vector2) -> void:
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.direction = direction
 	new_projectile.initial_position = player.position
 	new_projectile.position = player.position
-	new_projectile.enemy_hit.connect(on_enemy_hit)
+	new_projectile.object_hit.connect(on_projectile_hit)
 	$Projectiles.add_child(new_projectile)
 
 
-func on_enemy_hit(body: Node2D) -> void:
+func on_projectile_hit(body: Node2D) -> void:
 	if body is Enemy:
 		# Explode
 		add_to_score(250)
