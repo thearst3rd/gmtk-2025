@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwowpahlj38c2"]
+
+[ext_resource type="Texture2D" uid="uid://pfnaavk0cv6r" path="res://assets/background.png" id="1_y3082"]
+[ext_resource type="Script" uid="uid://b642ax3k7gbpb" path="res://src/game/infinite_background.gd" id="2_cbgea"]
+
+[node name="InfiniteBackground" type="TextureRect"]
+custom_minimum_size = Vector2(1000, 1000)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1076.0
+offset_top = -824.0
+offset_right = -76.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = ExtResource("1_y3082")
+stretch_mode = 1
+script = ExtResource("2_cbgea")
