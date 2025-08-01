@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://fhqqde4xxf6l"]
+[gd_scene load_steps=5 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
 [ext_resource type="Texture2D" uid="uid://c0bv77yp8nqig" path="res://icon.svg" id="1_amex0"]
+[ext_resource type="PackedScene" uid="uid://wg70b3s3fcwt" path="res://src/game/draw_controller.tscn" id="3_fagre"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_amex0"]
 radius = 12.0
@@ -17,3 +18,5 @@ texture = ExtResource("1_amex0")
 shape = SubResource("CircleShape2D_amex0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="DrawController" parent="." instance=ExtResource("3_fagre")]

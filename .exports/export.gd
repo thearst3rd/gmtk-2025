@@ -21,8 +21,9 @@ func _init() -> void:
 func clean_directory(name: String) -> void:
 	print("Cleaning directory %s" % [name])
 	var da := DirAccess.open("res://.exports/%s" % [name])
-	if da == null or not da.current_is_dir():
+	if da == null:
 		push_error("Invalid directory \"%s\"" % [name])
+		return
 	for file in da.get_files():
 		if file == ".gitkeep":
 			continue
@@ -41,14 +42,16 @@ func export_preset(preset_name: String) -> void:
 func zip_directory(name: String) -> void:
 	var dir := "res://.exports/%s" % [name]
 	var da := DirAccess.open(dir)
-	if da == null or not da.current_is_dir():
+	if da == null:
 		push_error("Could not zip %s" % [name])
+		return
 	var files := da.get_files()
 
 	var zip := ZIPPacker.new()
 	var err := zip.open("%s/gmtk-2025-%s.zip" % [dir, name])
 	if err:
 		push_error("Could not create zip %s" % [name])
+		return
 
 	print("Zipping directory %s" % [name])
 	for file in files:
