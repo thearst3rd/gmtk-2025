@@ -2,12 +2,14 @@ extends Node2D
 
 
 var game_time: float = 0
+var score: int = 0
 
 @onready var player: Player = %Player
 
 
 func _ready() -> void:
 	player.draw_controller.line_complete.connect(on_line_complete)
+	score = 0
 
 
 func _process(delta: float) -> void:
@@ -36,4 +38,20 @@ func on_player_shoot(direction: Vector2) -> void:
 	new_projectile.direction = direction
 	new_projectile.initial_position = player.position
 	new_projectile.position = player.position
+	new_projectile.enemy_hit.connect(on_enemy_hit)
 	$Projectiles.add_child(new_projectile)
+
+
+func on_enemy_hit(body: Node2D) -> void:
+	if body is Enemy:
+		# Explode
+		add_to_score(250)
+		$Enemies.remove_child(body)
+		body.queue_free()
+	else:
+		add_to_score(100)
+
+
+func add_to_score(value: int) -> void:
+	score += value
+	%ScoreLabel.text = "Score: " + str(score)
