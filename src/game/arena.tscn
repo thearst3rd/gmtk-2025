@@ -1,22 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=7 format=3 uid="uid://b0rybmr68nlu2"]
 
-[ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
+[ext_resource type="Script" uid="uid://cquq3y345hu4n" path="res://src/game/arena.gd" id="1_0pbf2"]
+[ext_resource type="PackedScene" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
 [ext_resource type="PackedScene" uid="uid://fhqqde4xxf6l" path="res://src/game/player.tscn" id="1_p3gke"]
 [ext_resource type="PackedScene" uid="uid://dvr4gp8bis72j" path="res://src/menu/pause_menu.tscn" id="2_fpc82"]
-[ext_resource type="PackedScene" uid="uid://cuk2s5krjoqwi" path="res://src/game/cactus.tscn" id="3_0pbf2"]
+[ext_resource type="PackedScene" path="res://src/game/cactus.tscn" id="3_0pbf2"]
+[ext_resource type="Script" uid="uid://c8nwccsmwim1l" path="res://src/game/enemy_spawner.gd" id="4_44jrx"]
 
 [node name="Arena" type="Node2D"]
+script = ExtResource("1_0pbf2")
 
 [node name="InfiniteBackground" parent="." instance=ExtResource("1_44jrx")]
 max_size = 2000.0
 
 [node name="Player" parent="." instance=ExtResource("1_p3gke")]
+unique_name_in_owner = true
 position = Vector2(451, 203)
+
+[node name="Enemies" type="Node" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
 visible = false
 
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource("4_44jrx")
+
+[node name="EnemySpawnTimer" type="Timer" parent="EnemySpawner"]
+autostart = true
+
 [node name="Cactus" parent="." instance=ExtResource("3_0pbf2")]
 position = Vector2(351, 356)
+
+[connection signal="timeout" from="EnemySpawner/EnemySpawnTimer" to="EnemySpawner" method="_on_enemy_spawn_timer_timeout"]

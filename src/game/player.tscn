@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://c0bv77yp8nqig" path="res://icon.svg" id="1_amex0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_amex0"]
-radius = 60.0
+radius = 12.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_7dijx")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_amex0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
