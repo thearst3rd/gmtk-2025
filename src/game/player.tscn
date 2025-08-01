@@ -1,22 +1,71 @@
-[gd_scene load_steps=5 format=3 uid="uid://fhqqde4xxf6l"]
+[gd_scene load_steps=11 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
-[ext_resource type="Texture2D" uid="uid://c0bv77yp8nqig" path="res://icon.svg" id="1_amex0"]
+[ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="2_7dijx"]
 [ext_resource type="PackedScene" uid="uid://wg70b3s3fcwt" path="res://src/game/draw_controller.tscn" id="3_fagre"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_amex0"]
-radius = 12.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fagre"]
+radius = 15.0
+height = 74.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkm2x"]
+atlas = ExtResource("2_7dijx")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2sim"]
+atlas = ExtResource("2_7dijx")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_artl0"]
+atlas = ExtResource("2_7dijx")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uurce"]
+atlas = ExtResource("2_7dijx")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmfhk"]
+atlas = ExtResource("2_7dijx")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lwbkh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkm2x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2sim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_artl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uurce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmfhk")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_7dijx")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_amex0")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_amex0")
+shape = SubResource("CapsuleShape2D_fagre")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="DrawController" parent="." instance=ExtResource("3_fagre")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_lwbkh")

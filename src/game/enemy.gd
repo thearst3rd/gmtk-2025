@@ -15,6 +15,7 @@ func _physics_process(_delta: float) -> void:
 		var player_position := player.global_position
 		var direction := (player_position - position).normalized()
 		velocity = direction * SPEED
+		$AnimatedSprite2D.play("walk")
 		move_and_slide()
 	else:
 		# Set position to... slowly circling the player?
