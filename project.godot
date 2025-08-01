@@ -23,6 +23,10 @@ Global="*res://src/scripts/global.gd"
 
 window/stretch/mode="canvas_items"
 
+[global_group]
+
+Player=""
+
 [input]
 
 move_left={
