@@ -1,12 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=9 format=3 uid="uid://b0rybmr68nlu2"]
 
 [ext_resource type="Script" uid="uid://cquq3y345hu4n" path="res://src/game/arena.gd" id="1_0pbf2"]
 [ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
 [ext_resource type="PackedScene" uid="uid://fhqqde4xxf6l" path="res://src/game/player.tscn" id="1_p3gke"]
 [ext_resource type="PackedScene" uid="uid://dvr4gp8bis72j" path="res://src/menu/pause_menu.tscn" id="2_fpc82"]
-[ext_resource type="PackedScene" uid="uid://6tyx4sklhchk" path="res://src/game/cactus.tscn" id="3_0pbf2"]
 [ext_resource type="Script" uid="uid://c8nwccsmwim1l" path="res://src/game/enemy_spawner.gd" id="4_44jrx"]
-[ext_resource type="PackedScene" uid="uid://tvelcr33ffrq" path="res://src/game/Healthbar.tscn" id="4_j5vg1"]
+[ext_resource type="PackedScene" uid="uid://tvelcr33ffrq" path="res://src/game/healthbar.tscn" id="4_j5vg1"]
 [ext_resource type="PackedScene" uid="uid://c14gxuhmro3d5" path="res://src/game/game_over.tscn" id="5_ewcyu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwrxi"]

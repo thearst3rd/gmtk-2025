@@ -17,8 +17,8 @@ func _ready() -> void:
 
 
 func _on_player_player_hit(current_health: int) -> void:
-	if(current_health >= MAX_HEALTH):
+	if current_health >= MAX_HEALTH:
 		return
 	for i in MAX_HEALTH:
-		if(i >= current_health):
+		if i >= current_health:
 			health_markers[i].texture = unhealthy_texture

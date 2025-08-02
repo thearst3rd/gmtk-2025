@@ -19,7 +19,7 @@ var vulnerable := true
 
 
 func _physics_process(_delta: float) -> void:
-	if(remaining_health <= 0):
+	if remaining_health <= 0:
 		return
 
 	var direction := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
@@ -33,23 +33,23 @@ func _physics_process(_delta: float) -> void:
 	for i in get_slide_collision_count():
 		var collision := get_slide_collision(i)
 		var collider: Node = collision.get_collider()
-		if(collider.is_in_group("HurtsPlayer")):
+		if collider.is_in_group("HurtsPlayer"):
 			player_damaged()
 			break
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if(area.is_in_group("HurtsPlayer")):
+	if area.is_in_group("HurtsPlayer"):
 		player_damaged()
 
 
 func player_damaged() -> void:
-	if(not vulnerable):
+	if not vulnerable:
 		return
 	print("Oof ouch owie my bones.")
 	remaining_health -= 1
 	player_hit.emit(remaining_health)
-	if(remaining_health <= 0):
+	if remaining_health <= 0:
 		player_died.emit()
 	else:
 		vulnerable = false
