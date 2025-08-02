@@ -44,8 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/bold_font = ExtResource("2_nqgkk")
 bbcode_enabled = true
-text = "[center][font_size=56
-][b]Loop It Up, Cowboy![/b][/font_size]
+text = "[center][font_size=56][b]Loop It Up, Cowboy![/b][/font_size]
 
 [font_size=24]Created for GMTK Game Jam 2025[/font_size]
 
