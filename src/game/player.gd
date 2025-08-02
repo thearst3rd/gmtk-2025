@@ -16,6 +16,8 @@ var vulnerable := true
 
 @onready var draw_controller: DrawController = $DrawController
 @onready var i_frames: Timer = $IFrames
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var footsteps: Array[AudioStreamPlayer] = [$Footstep1, $Footstep2, $Footstep3]
 
 
 func _physics_process(_delta: float) -> void:
@@ -26,9 +28,9 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * SPEED
 
 	if direction != Vector2.ZERO:
-		$AnimatedSprite2D.play("walk")
+		animated_sprite.play("walk")
 	else:
-		$AnimatedSprite2D.play("default")
+		animated_sprite.play("default")
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var collision := get_slide_collision(i)
@@ -75,3 +77,12 @@ func captured_enemy() -> void:
 
 func _on_i_frames_timeout() -> void:
 	vulnerable = true
+
+
+func _on_frame_changed() -> void:
+	if animated_sprite.frame in [1, 3]:
+		play_footstep()
+
+
+func play_footstep() -> void:
+	footsteps.pick_random().play()

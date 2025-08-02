@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdshjhhgbltki"]
+[gd_scene load_steps=14 format=3 uid="uid://cdshjhhgbltki"]
 
 [ext_resource type="Script" uid="uid://buiyf6n4tkst4" path="res://src/game/enemy.gd" id="1_askbf"]
 [ext_resource type="Texture2D" uid="uid://le4hu0xihpxw" path="res://assets/bad_guy.png" id="3_76a2n"]
+[ext_resource type="AudioStream" uid="uid://dmgg6twx4gqcr" path="res://assets/sfx/enemyFootstep1.wav" id="3_ysghf"]
+[ext_resource type="AudioStream" uid="uid://cvjx88ww5lon" path="res://assets/sfx/enemyFootstep2.wav" id="4_q8ibl"]
+[ext_resource type="AudioStream" uid="uid://chljx1gqr72br" path="res://assets/sfx/enemyFootstep3.wav" id="5_ln6ok"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_askbf"]
 radius = 14.0
@@ -76,3 +79,28 @@ shape = SubResource("CapsuleShape2D_xfivt")
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_1pqqp")
 animation = &"walk"
+
+[node name="Footstep1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ysghf")
+volume_db = -10.0
+pitch_scale = 0.8
+max_distance = 1200.0
+panning_strength = 2.0
+bus = &"Sound"
+
+[node name="Footstep2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_q8ibl")
+volume_db = -10.0
+pitch_scale = 0.9
+max_distance = 1200.0
+panning_strength = 2.0
+bus = &"Sound"
+
+[node name="Footstep3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ln6ok")
+volume_db = -10.0
+max_distance = 1200.0
+panning_strength = 2.0
+bus = &"Sound"
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]

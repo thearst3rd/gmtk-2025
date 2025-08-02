@@ -1,8 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://fhqqde4xxf6l"]
+[gd_scene load_steps=15 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="2_7dijx"]
 [ext_resource type="PackedScene" uid="uid://wg70b3s3fcwt" path="res://src/game/draw_controller.tscn" id="3_fagre"]
+[ext_resource type="AudioStream" uid="uid://0sea0pf4xv4j" path="res://assets/sfx/footstep1.wav" id="4_artl0"]
+[ext_resource type="AudioStream" uid="uid://b5sgrqjqwlpjl" path="res://assets/sfx/footstep2.wav" id="5_uurce"]
+[ext_resource type="AudioStream" uid="uid://wvg5weqt4uy8" path="res://assets/sfx/footstep3.wav" id="6_gmfhk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fagre"]
 radius = 15.0
@@ -87,5 +90,23 @@ shape = SubResource("CapsuleShape2D_nkm2x")
 wait_time = 0.25
 one_shot = true
 
+[node name="Footstep1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_artl0")
+volume_db = -5.0
+bus = &"Sound"
+
+[node name="Footstep2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_uurce")
+volume_db = -5.0
+pitch_scale = 1.2
+bus = &"Sound"
+
+[node name="Footstep3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gmfhk")
+volume_db = -5.0
+pitch_scale = 1.3
+bus = &"Sound"
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="IFrames" to="." method="_on_i_frames_timeout"]
