@@ -1,12 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://fhqqde4xxf6l"]
+[gd_scene load_steps=18 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
+[ext_resource type="Shader" uid="uid://bwggl6sg54d2s" path="res://src/game/desaturate.gdshader" id="1_nkm2x"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="2_7dijx"]
 [ext_resource type="PackedScene" uid="uid://wg70b3s3fcwt" path="res://src/game/draw_controller.tscn" id="3_fagre"]
 [ext_resource type="AudioStream" uid="uid://0sea0pf4xv4j" path="res://assets/sfx/footstep1.wav" id="4_artl0"]
 [ext_resource type="AudioStream" uid="uid://b5sgrqjqwlpjl" path="res://assets/sfx/footstep2.wav" id="5_uurce"]
 [ext_resource type="AudioStream" uid="uid://wvg5weqt4uy8" path="res://assets/sfx/footstep3.wav" id="6_gmfhk"]
 [ext_resource type="AudioStream" uid="uid://b8nmywku8i6kh" path="res://assets/sfx/shoot.wav" id="7_uurce"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2sim"]
+shader = ExtResource("1_nkm2x")
+shader_parameter/desaturation_amount = 0.0
+shader_parameter/opacity = 1.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fagre"]
 radius = 15.0
@@ -64,11 +70,103 @@ animations = [{
 radius = 15.0
 height = 74.0
 
+[sub_resource type="Animation" id="Animation_nkm2x"]
+resource_name = "invincible"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/desaturation_amount")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.25]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/opacity")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.5, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_m2sim"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/desaturation_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_artl0"]
+resource_name = "normal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/desaturation_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m2sim"]
+_data = {
+&"RESET": SubResource("Animation_m2sim"),
+&"invincible": SubResource("Animation_nkm2x"),
+&"normal": SubResource("Animation_artl0")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+material = SubResource("ShaderMaterial_m2sim")
 collision_mask = 15
 script = ExtResource("1_7dijx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_fagre")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -77,10 +175,13 @@ shape = SubResource("CapsuleShape2D_fagre")
 MAXIMUM_LINE_DISTANCE = 600.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+position = Vector2(1, 6)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_lwbkh")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 
@@ -111,6 +212,11 @@ bus = &"Sound"
 stream = ExtResource("7_uurce")
 volume_db = -3.0
 bus = &"Sound"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_m2sim")
+}
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

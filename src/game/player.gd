@@ -56,6 +56,7 @@ func player_damaged() -> void:
 		player_died.emit()
 	else:
 		vulnerable = false
+		$AnimationPlayer.play("invincible")
 		i_frames.start()
 
 
@@ -78,6 +79,7 @@ func captured_enemy() -> void:
 
 
 func _on_i_frames_timeout() -> void:
+	$AnimationPlayer.play("normal")
 	vulnerable = true
 
 
