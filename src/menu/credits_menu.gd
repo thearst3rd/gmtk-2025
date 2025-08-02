@@ -1,6 +1,7 @@
 extends Control
 
 
+@onready var back_button: Button = %BackButton
 @onready var licenses_button: Button = %LicensesButton
 
 @onready var licenses_panel: PanelContainer = %LicensesPanel
@@ -14,6 +15,10 @@ var main_licenses := [
 ]
 
 
+func _ready() -> void:
+	back_button.grab_focus()
+
+
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://src/menu/main_menu.tscn")
 
@@ -22,11 +27,13 @@ func _on_licenses_button_pressed() -> void:
 	if licenses_panel.visible:
 		licenses_panel.hide()
 		licenses_button.text = "View All Licenses"
+		back_button.show()
 	else:
 		licenses_panel.show()
 		licenses_button.text = "Hide Licenses"
 		if licenses_label.text.is_empty():
 			licenses_label.parse_bbcode(generate_license_bbcode_text())
+		back_button.hide()
 
 
 func generate_license_bbcode_text() -> String:

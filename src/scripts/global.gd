@@ -41,7 +41,7 @@ func save_settings() -> void:
 	var json := {
 		"sound_volume": sound_volume,
 		"music_volume": music_volume,
-		"fullscreen": get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN,
+		"fullscreen": get_window().mode in [Window.MODE_EXCLUSIVE_FULLSCREEN, Window.MODE_FULLSCREEN],
 	}
 	var f := FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	if not f:
@@ -66,7 +66,7 @@ func _notification(what: int) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"toggle_fullscreen"):
-		var is_fullscreen := get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN
+		var is_fullscreen := get_window().mode in [Window.MODE_EXCLUSIVE_FULLSCREEN, Window.MODE_FULLSCREEN]
 		get_window().mode = Window.MODE_WINDOWED if is_fullscreen else Window.MODE_EXCLUSIVE_FULLSCREEN
 		settings_updated()
 		get_window().set_input_as_handled()

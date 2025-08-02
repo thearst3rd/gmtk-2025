@@ -1,7 +1,14 @@
 extends ColorRect
 
 
+@onready var resume_button: Button = %ResumeButton
+
+@export var pausable := true
+
+
 func _input(event: InputEvent) -> void:
+	if not pausable:
+		return
 	if event.is_action_pressed(&"pause"):
 		if visible:
 			unpause()
@@ -13,6 +20,7 @@ func _input(event: InputEvent) -> void:
 func pause():
 	get_tree().paused = true
 	show()
+	resume_button.grab_focus()
 
 
 func unpause():

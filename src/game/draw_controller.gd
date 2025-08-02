@@ -2,7 +2,7 @@ class_name DrawController
 extends Node2D
 
 
-signal line_complete(points: Array[Vector2], center: Vector2, penalty: float)
+signal line_complete(points: Array[Vector2], center: Vector2, golden: bool)
 
 
 @export var SHOW_DEBUG_COMPARISON := false
@@ -18,6 +18,7 @@ signal line_complete(points: Array[Vector2], center: Vector2, penalty: float)
 
 # Penalty threshold - higher than this value and it doesn't count as a circle
 const PENALTY_THRESHOLD := 25.0
+const PENALTY_GOLD_THRESHOLD := 8.0
 
 var active := true
 var golden := false
@@ -32,6 +33,8 @@ var current_length: float
 @onready var fail_animation: AnimationPlayer = %FailAnimation
 @onready var success_line: Line2D = $SuccessLine
 @onready var success_animation: AnimationPlayer = %SuccessAnimation
+@onready var golden_line: Line2D = $GoldenLine
+@onready var golden_animation: AnimationPlayer = %GoldenAnimation
 
 @onready var success_tween: Tween = null
 
@@ -59,6 +62,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed(&"shoot"):
 			_drawing_started()
 			get_viewport().set_input_as_handled()
+
+
+func cancel_drawing() -> void:
+	if not drawing:
+		return
+	drawing = false
+	_drawing_failed()
+	drawing_sound.volume_db = -80.0
 
 
 func _drawing_started() -> void:
@@ -130,8 +141,9 @@ func _drawing_finished() -> void:
 	# Now that the loop is finished, convert all of the points into their global position
 	for idx in range(len(drawing_points)):
 		drawing_points[idx] = drawing_points[idx] + global_position
-	_drawing_succeeded(mean_center)
-	line_complete.emit(drawing_points, mean_center + global_position, penalty)
+	var is_golden := penalty < PENALTY_GOLD_THRESHOLD
+	_drawing_succeeded(mean_center, is_golden)
+	line_complete.emit(drawing_points, mean_center + global_position, is_golden)
 
 
 # Check if the last point added has crossed over the existing line.
@@ -201,14 +213,20 @@ func _drawing_failed() -> void:
 	miss_sound.play()
 
 
-func _drawing_succeeded(mean_point: Vector2) -> void:
+func _drawing_succeeded(mean_point: Vector2, is_golden: bool) -> void:
 	line.hide()
 	success_line.clear_points()
+	golden_line.clear_points()
 	for i in range(line.get_point_count()):
 		success_line.add_point(line.get_point_position(i) - mean_point)
+		golden_line.add_point(line.get_point_position(i) - mean_point)
 	success_line.position = mean_point
+	golden_line.position = mean_point
 	success_animation.stop()
 	success_animation.play(&"success")
+	if is_golden:
+		golden_animation.stop()
+		golden_animation.play(&"golden")
 
 	if success_tween:
 		success_tween.stop()

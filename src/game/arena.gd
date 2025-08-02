@@ -9,12 +9,11 @@ var score: int = 0
 var loaded_chunks: Array[Vector2] = []
 var is_game_over := false
 
-@export var GOLDEN_THRESHOLD := 8.0
-
 @onready var player: Player = %Player
-@onready var game_over: ColorRect = %GameOver
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
 @onready var how_to_play: Control = %HowToPlay
+@onready var pause_menu: ColorRect = %PauseMenu
+@onready var game_over: ColorRect = %GameOver
 
 var collect_sounds: Array[AudioStreamPlayer] = []
 
@@ -125,7 +124,7 @@ func despawn_objects(chunk_start: Vector2) -> void:
 			object.queue_free()
 
 
-func on_line_complete(points: Array[Vector2], center: Vector2, penalty: float) -> void:
+func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> void:
 	var enemies_captured := 0
 
 	for node in $Enemies.get_children():
@@ -140,7 +139,7 @@ func on_line_complete(points: Array[Vector2], center: Vector2, penalty: float) -
 			player.captured_enemy()
 
 	if enemies_captured > 0:
-		if penalty < GOLDEN_THRESHOLD:
+		if golden:
 			add_to_score(500 + 150 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = true
 			golden_sound.play()
@@ -204,6 +203,7 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 func _on_player_player_died() -> void:
 	is_game_over = true
 	game_over.reveal(score)
+	pause_menu.pausable = false
 
 
 func on_how_to_play_button_pressed() -> void:
@@ -211,8 +211,10 @@ func on_how_to_play_button_pressed() -> void:
 	$UI.hide()
 	how_to_play.show()
 	how_to_play.load_screen()
+	pause_menu.pausable = false
 
 
 func on_how_to_play_exited() -> void:
 	get_tree().paused = false
 	$UI.show()
+	pause_menu.pausable = true

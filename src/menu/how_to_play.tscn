@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://pfnaavk0cv6r" path="res://assets/background.png" id="2_x25no"]
 [ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="5_a6atb"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="6_eh6s7"]
-[ext_resource type="PackedScene" uid="uid://6tyx4sklhchk" path="res://src/game/cactus.tscn" id="6_w406u"]
+[ext_resource type="Texture2D" uid="uid://dtdxgcuggb37h" path="res://assets/cactus.png" id="7_eh6s7"]
 [ext_resource type="Texture2D" uid="uid://ce4mvaev2oe3r" path="res://assets/crosshair_line_normal.png" id="7_neixi"]
 [ext_resource type="Texture2D" uid="uid://dibbag1itgjtj" path="res://assets/crosshair.png" id="8_esxau"]
 [ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="10_eh6s7"]
@@ -189,47 +189,6 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="Animation" id="Animation_5r8ea"]
-resource_name = "lasso_view"
-length = 1.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LassoView:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LassoView/Line2D:points")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1, 1.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [PackedVector2Array(0, 0), PackedVector2Array(0, 0, 14, -31), PackedVector2Array(0, 0, 14, -31, 46, -55), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("LassoView/Line2D:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
 [sub_resource type="Animation" id="Animation_puber"]
 length = 0.001
 tracks/0/type = "value"
@@ -363,6 +322,47 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5r8ea"]
+resource_name = "lasso_view"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LassoView:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LassoView/Line2D:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0), PackedVector2Array(0, 0, 14, -31), PackedVector2Array(0, 0, 14, -31, 46, -55), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LassoView/Line2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_eh6s7"]
@@ -590,8 +590,10 @@ animation = &"walk"
 [node name="ProjectileView" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Cactus" parent="ProjectileView" instance=ExtResource("6_w406u")]
-position = Vector2(434, 344)
+[node name="Cactus" type="Sprite2D" parent="ProjectileView"]
+position = Vector2(433, 347)
+scale = Vector2(2, 2)
+texture = ExtResource("7_eh6s7")
 
 [node name="Line2D" type="Line2D" parent="ProjectileView"]
 texture_repeat = 2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c14gxuhmro3d5"]
 
-[ext_resource type="Script" uid="uid://bdcprmc30kaw6" path="res://src/game/game_over.gd" id="1_m6r40"]
+[ext_resource type="Script" uid="uid://bdcprmc30kaw6" path="res://src/menu/game_over.gd" id="1_m6r40"]
 
 [node name="GameOver" type="ColorRect"]
 anchors_preset = 15
@@ -27,12 +27,14 @@ text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="ScoreText" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "Final score: 0"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Try again"
 

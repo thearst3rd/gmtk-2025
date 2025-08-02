@@ -17,8 +17,16 @@ var vulnerable := true
 @onready var draw_controller: DrawController = $DrawController
 @onready var i_frames: Timer = $IFrames
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hurtbox: Area2D = %Hurtbox
 @onready var footsteps: Array[AudioStreamPlayer] = [$Footstep1, $Footstep2, $Footstep3]
 @onready var shoot_sound: AudioStreamPlayer = $ShootSound
+@onready var hurt_sound: AudioStreamPlayer = $HurtSound
+@onready var game_over_sound: AudioStreamPlayer = $GameOverSound
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+
+func _ready() -> void:
+	animation_player.play(&"normal")
 
 
 func _physics_process(_delta: float) -> void:
@@ -29,9 +37,9 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * SPEED
 
 	if direction != Vector2.ZERO:
-		animated_sprite.play("walk")
+		animated_sprite.play(&"walk")
 	else:
-		animated_sprite.play("default")
+		animated_sprite.play(&"default")
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var collision := get_slide_collision(i)
@@ -53,10 +61,15 @@ func player_damaged() -> void:
 	remaining_health -= 1
 	player_hit.emit(remaining_health)
 	if remaining_health <= 0:
+		game_over_sound.play()
 		player_died.emit()
+		animated_sprite.play(&"default")
+		animation_player.play(&"dead")
+		draw_controller.cancel_drawing()
 	else:
+		hurt_sound.play()
 		vulnerable = false
-		$AnimationPlayer.play("invincible")
+		animation_player.play(&"invincible")
 		i_frames.start()
 
 
@@ -79,13 +92,17 @@ func captured_enemy() -> void:
 
 
 func _on_i_frames_timeout() -> void:
-	$AnimationPlayer.play("normal")
+	animation_player.play(&"normal")
 	vulnerable = true
+	var areas := hurtbox.get_overlapping_areas()
+	for area in areas:
+		_on_hurtbox_area_entered(area)
 
 
 func _on_frame_changed() -> void:
-	if animated_sprite.frame in [1, 3]:
-		play_footstep()
+	if animated_sprite.animation == &"walk":
+		if animated_sprite.frame in [1, 3]:
+			play_footstep()
 
 
 func play_footstep() -> void:
