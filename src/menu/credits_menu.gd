@@ -9,7 +9,7 @@ extends Control
 
 var main_licenses := [
 	["Godot Engine", Engine.get_license_text()],
-	# Fonts etc
+	["Bowling sound", "SPRTInd-Int_BowlingStrike_Zus_OwSfx_Hard by ZusIsKing -- https://freesound.org/s/766871/ -- License: Creative Commons 0"]
 ]
 
 

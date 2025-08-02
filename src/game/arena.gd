@@ -121,7 +121,7 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 		player.draw_controller.active = false
 
 
-func on_player_shoot(location: Vector2, direction: Vector2, billiard: bool = false) -> void:
+func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -> void:
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.billiard_ball = billiard
 	new_projectile.init(location, direction)
@@ -130,11 +130,21 @@ func on_player_shoot(location: Vector2, direction: Vector2, billiard: bool = fal
 	$Projectiles.add_child.call_deferred(new_projectile)
 
 
-func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: bool) -> void:
+func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: int) -> void:
 	if body is Enemy:
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
-			on_player_shoot(body.position, new_direction, true)
+			on_player_shoot(body.position, new_direction, 1)
+			if billiard_ball == 2:
+				print("Strike!!!")
+				var strike := AudioStreamPlayer2D.new()
+				strike.bus = &"Sound"
+				strike.volume_db = -4.0
+				strike.position = body.position
+				strike.stream = preload("res://assets/sfx/bowlingStrike.wav")
+				add_child(strike)
+				strike.finished.connect(strike.queue_free)
+				strike.play()
 		# Explode
 		add_to_score(2500)
 		$Enemies.remove_child(body)
