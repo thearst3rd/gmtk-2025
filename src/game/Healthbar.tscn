@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://tvelcr33ffrq"]
+
+[ext_resource type="Texture2D" uid="uid://c0bv77yp8nqig" path="res://icon.svg" id="1_ebsae"]
+
+[node name="Healthbar" type="HBoxContainer"]
+offset_right = 392.0
+offset_bottom = 128.0
+
+[node name="HealthMarker" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_ebsae")
+
+[node name="HealthMarker2" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_ebsae")
+
+[node name="HealthMarker3" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_ebsae")

@@ -3,9 +3,13 @@ extends CharacterBody2D
 
 
 signal player_died()
+signal player_hit()
 
 
 const SPEED := 180.0
+
+
+var remaining_health := 3
 
 
 func _physics_process(_delta: float) -> void:
@@ -13,6 +17,15 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * SPEED
 	move_and_slide()
 
-func hit_by_cactus() -> void:
+
+func player_damaged() -> void:
 	print("Oof ouch owie my bones.")
-	player_died.emit()
+	remaining_health -= 1
+	player_hit.emit()
+	if(remaining_health <= 0):
+		player_died.emit()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if(area.is_in_group("HurtsPlayer")):
+		player_damaged()
