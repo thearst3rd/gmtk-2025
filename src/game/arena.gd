@@ -203,9 +203,7 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 func _on_player_player_died() -> void:
 	is_game_over = true
 	game_over.reveal(score)
-	# o7
-	pause_menu.get_parent().remove_child(pause_menu)
-	pause_menu.queue_free()
+	pause_menu.pausable = false
 
 
 func on_how_to_play_button_pressed() -> void:
@@ -213,8 +211,10 @@ func on_how_to_play_button_pressed() -> void:
 	$UI.hide()
 	how_to_play.show()
 	how_to_play.load_screen()
+	pause_menu.pausable = false
 
 
 func on_how_to_play_exited() -> void:
 	get_tree().paused = false
 	$UI.show()
+	pause_menu.pausable = true
