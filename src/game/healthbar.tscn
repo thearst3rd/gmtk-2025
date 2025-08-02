@@ -10,6 +10,7 @@ anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 64.0
 grow_horizontal = 0
+alignment = 2
 script = ExtResource("1_uw4jx")
 
 [node name="HealthMarker" type="TextureRect" parent="."]
