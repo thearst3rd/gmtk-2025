@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
-[ext_resource type="Shader" uid="uid://bwggl6sg54d2s" path="res://src/game/desaturate.gdshader" id="1_nkm2x"]
+[ext_resource type="Shader" uid="uid://bwggl6sg54d2s" path="res://resources/desaturate.gdshader" id="1_nkm2x"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="2_7dijx"]
 [ext_resource type="PackedScene" uid="uid://wg70b3s3fcwt" path="res://src/game/draw_controller.tscn" id="3_fagre"]
 [ext_resource type="AudioStream" uid="uid://0sea0pf4xv4j" path="res://assets/sfx/footstep1.wav" id="4_artl0"]

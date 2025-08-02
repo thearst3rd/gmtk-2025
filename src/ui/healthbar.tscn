@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://tvelcr33ffrq"]
 
-[ext_resource type="Script" uid="uid://be36uqgdftu4y" path="res://src/game/healthbar.gd" id="1_uw4jx"]
+[ext_resource type="Script" uid="uid://be36uqgdftu4y" path="res://src/ui/healthbar.gd" id="1_uw4jx"]
 [ext_resource type="Texture2D" uid="uid://cy73vk0l6eeak" path="res://assets/cowboy_hat.png" id="2_6pbap"]
 
 [node name="Healthbar" type="HBoxContainer"]

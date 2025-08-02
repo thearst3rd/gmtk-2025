@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c14gxuhmro3d5"]
 
-[ext_resource type="Script" uid="uid://bdcprmc30kaw6" path="res://src/game/game_over.gd" id="1_m6r40"]
+[ext_resource type="Script" uid="uid://bdcprmc30kaw6" path="res://src/menu/game_over.gd" id="1_m6r40"]
 
 [node name="GameOver" type="ColorRect"]
 anchors_preset = 15
