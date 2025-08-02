@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://pfnaavk0cv6r" path="res://assets/background.png" id="2_x25no"]
 [ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="5_a6atb"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="6_eh6s7"]
-[ext_resource type="PackedScene" uid="uid://6tyx4sklhchk" path="res://src/game/cactus.tscn" id="6_w406u"]
+[ext_resource type="Texture2D" uid="uid://dtdxgcuggb37h" path="res://assets/cactus.png" id="7_eh6s7"]
 [ext_resource type="Texture2D" uid="uid://ce4mvaev2oe3r" path="res://assets/crosshair_line_normal.png" id="7_neixi"]
 [ext_resource type="Texture2D" uid="uid://dibbag1itgjtj" path="res://assets/crosshair.png" id="8_esxau"]
 [ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="10_eh6s7"]
@@ -590,8 +590,10 @@ animation = &"walk"
 [node name="ProjectileView" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Cactus" parent="ProjectileView" instance=ExtResource("6_w406u")]
-position = Vector2(434, 344)
+[node name="Cactus" type="Sprite2D" parent="ProjectileView"]
+position = Vector2(433, 347)
+scale = Vector2(2, 2)
+texture = ExtResource("7_eh6s7")
 
 [node name="Line2D" type="Line2D" parent="ProjectileView"]
 texture_repeat = 2
