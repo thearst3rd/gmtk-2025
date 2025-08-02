@@ -20,6 +20,16 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
+func init(init_position: Vector2, init_direction: Vector2) -> void:
+	position = init_position
+	initial_position = init_position
+	direction = init_direction
+	if direction.x < 0:
+		$AnimationPlayer.play("left")
+	else:
+		$AnimationPlayer.play("right")
+
+
 func on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		return
