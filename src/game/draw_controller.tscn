@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://wg70b3s3fcwt"]
+
+[ext_resource type="Script" uid="uid://b16kp1xpnh3d5" path="res://src/game/draw_controller.gd" id="1_pi2k6"]
+[ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="2_d6br6"]
+
+[node name="DrawController" type="Node2D"]
+script = ExtResource("1_pi2k6")
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+texture_repeat = 2
+points = PackedVector2Array(172, 93, 182, 84, 194, 81, 206, 85, 214, 84, 221, 81, 230, 87)
+texture = ExtResource("2_d6br6")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="ComparisonLine" type="Line2D" parent="."]
+visible = false
+closed = true
+width = 5.0
+default_color = Color(0, 0, 0, 1)
