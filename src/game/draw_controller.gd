@@ -91,7 +91,7 @@ func _drawing_finished() -> void:
 
 	var is_closed := _check_if_closed(drawing_points)
 
-	print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
+	#print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
 
 	if SHOW_DEBUG_COMPARISON:
 		comparison_line.clear_points()
@@ -140,8 +140,6 @@ func _get_mean_circle(points: Array[Vector2]) -> Array:
 		mean_radius += point.distance_to(mean_point)
 	mean_radius /= points.size()
 
-	print("Center: ", mean_point + global_position)
-
 	return [mean_point, mean_radius]
 
 
@@ -155,7 +153,6 @@ func _check_circularity(points: Array[Vector2], center: Vector2, radius: float) 
 		total_penalty += penalty
 	total_penalty /= drawing_points.size()
 	total_penalty *= 100.0
-	print(total_penalty)
 	return total_penalty
 
 
