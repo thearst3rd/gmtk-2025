@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 
 signal player_died()
-signal player_hit()
+signal player_hit(current_health: int)
 signal shoot(direction: Vector2)
 
 
@@ -12,9 +12,10 @@ const SPEED := 180.0
 
 var remaining_health := 3
 var captured_enemies := 0
+var vulnerable := true
 
 @onready var draw_controller: DrawController = $DrawController
-
+@onready var i_frames: Timer = $IFrames
 
 
 func _physics_process(_delta: float) -> void:
@@ -26,19 +27,30 @@ func _physics_process(_delta: float) -> void:
 	else:
 		$AnimatedSprite2D.play("default")
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider: Node = collision.get_collider()
+		if(collider.is_in_group("HurtsPlayer")):
+			player_damaged()
+			break
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if(area.is_in_group("HurtsPlayer")):
+		player_damaged()
 
 
 func player_damaged() -> void:
+	if(not vulnerable):
+		return
 	print("Oof ouch owie my bones.")
 	remaining_health -= 1
-	player_hit.emit()
+	player_hit.emit(remaining_health)
 	if(remaining_health <= 0):
 		player_died.emit()
-
-
-func _on_area_entered(area: Area2D) -> void:
-	if(area.is_in_group("HurtsPlayer")):
-		player_damaged()
+	else:
+		vulnerable = false
+		i_frames.start()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -54,10 +66,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func hit_by_cactus() -> void:
-	print("Oof ouch owie my bones.")
-	player_died.emit()
-
-
 func captured_enemy() -> void:
 	captured_enemies += 1
+
+
+func _on_i_frames_timeout() -> void:
+	vulnerable = true
