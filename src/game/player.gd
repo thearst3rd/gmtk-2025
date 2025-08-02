@@ -17,6 +17,7 @@ var vulnerable := true
 @onready var draw_controller: DrawController = $DrawController
 @onready var i_frames: Timer = $IFrames
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hurtbox: Area2D = %Hurtbox
 @onready var footsteps: Array[AudioStreamPlayer] = [$Footstep1, $Footstep2, $Footstep3]
 @onready var shoot_sound: AudioStreamPlayer = $ShootSound
 @onready var hurt_sound: AudioStreamPlayer = $HurtSound
@@ -93,6 +94,9 @@ func captured_enemy() -> void:
 func _on_i_frames_timeout() -> void:
 	animation_player.play(&"normal")
 	vulnerable = true
+	var areas := hurtbox.get_overlapping_areas()
+	for area in areas:
+		_on_hurtbox_area_entered(area)
 
 
 func _on_frame_changed() -> void:
