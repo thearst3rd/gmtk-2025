@@ -32,7 +32,7 @@ func init(init_position: Vector2, init_direction: Vector2) -> void:
 
 
 func on_body_entered(body: Node2D) -> void:
-	if body is Player:
+	if body is Player or body.owner is Player:
 		return
 	# Fancy particle effects, etc.
 	object_hit.emit(body, position, billiard_ball)

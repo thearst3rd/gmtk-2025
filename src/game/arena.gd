@@ -9,6 +9,7 @@ var score: int = 0
 var loaded_chunks: Array[Vector2] = []
 
 @onready var player: Player = %Player
+@onready var game_over: ColorRect = %GameOver
 
 
 func _ready() -> void:
@@ -151,3 +152,7 @@ func on_projectile_expire(location: Vector2) -> void:
 func add_to_score(value: int) -> void:
 	score += value
 	%ScoreLabel.text = "Score: " + str(score)
+
+
+func _on_player_player_died() -> void:
+	game_over.reveal(score)

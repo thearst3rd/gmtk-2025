@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuk2s5krjoqwi"]
+[gd_scene load_steps=5 format=3 uid="uid://6tyx4sklhchk"]
 
-[ext_resource type="Script" uid="uid://dv3mpmyye8t5t" path="res://src/game/cactus.gd" id="1_326do"]
 [ext_resource type="Texture2D" uid="uid://dtdxgcuggb37h" path="res://assets/cactus.png" id="1_we2vn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_we2vn"]
@@ -12,10 +11,9 @@ size = Vector2(18, 25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ho7a0"]
 size = Vector2(18, 25)
 
-[node name="Cactus" type="Area2D"]
+[node name="Cactus" type="Area2D" groups=["HurtsPlayer"]]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_326do")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
