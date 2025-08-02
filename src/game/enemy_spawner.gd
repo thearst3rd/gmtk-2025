@@ -53,12 +53,12 @@ func spawn_enemy() -> void:
 	if arena.player.remaining_health <= 0:
 		return
 	var new_enemy := enemy.instantiate() as CharacterBody2D
-	enemies.add_child(new_enemy)
 	# Potentially change spawning away from a circle to make it feel better with a rectangular screen
 	var angle := randf() * TAU
 	var direction := Vector2(cos(angle), sin(angle)).normalized()
 	var distance := randf_range(MIN_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE)
-	new_enemy.global_position = player.global_position + direction * distance
+	new_enemy.position = player.global_position + direction * distance
+	enemies.add_child(new_enemy)
 
 
 func _on_enemy_spawn_timer_timeout() -> void:
