@@ -1,12 +1,14 @@
 extends ColorRect
 
 
-@onready var score_text: RichTextLabel = $CenterContainer/VBoxContainer/ScoreText
+@onready var score_text: RichTextLabel = %ScoreText
+@onready var restart_button: Button = %RestartButton
 
 
 func reveal(final_score) -> void:
 	show()
 	score_text.text = "Final score: " + str(final_score)
+	restart_button.grab_focus()
 
 
 func _on_restart_button_pressed() -> void:

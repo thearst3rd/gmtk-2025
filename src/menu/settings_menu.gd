@@ -13,6 +13,10 @@ func _ready() -> void:
 	fullscreen_check.set_pressed_no_signal(is_fullscreen)
 
 
+func focus() -> void:
+	sound_slider.grab_focus()
+
+
 func _on_sound_slider_value_changed(value: float) -> void:
 	Global.sound_volume = value
 	Global.settings_updated()
