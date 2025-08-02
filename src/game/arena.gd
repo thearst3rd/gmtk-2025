@@ -42,6 +42,11 @@ func _ready() -> void:
 		collect_sounds.push_back(sound)
 		add_child(sound)
 
+	for object in $Objects.get_children() as Array[Node2D]:
+		if object.position.distance_squared_to(player.position) < 6400:
+			$Objects.remove_child(object)
+			object.queue_free()
+
 
 func _process(delta: float) -> void:
 	game_time += delta
