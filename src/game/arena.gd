@@ -97,8 +97,8 @@ func despawn_objects(chunk_start: Vector2) -> void:
 			object.queue_free()
 
 
-func on_line_complete(points: Array[Vector2], _penalty: float) -> void:
-	var enemy_captured := false
+func on_line_complete(points: Array[Vector2], penalty: float) -> void:
+	var enemies_captured := 0
 
 	for node in $Enemies.get_children():
 		if node is not Enemy:
@@ -106,30 +106,47 @@ func on_line_complete(points: Array[Vector2], _penalty: float) -> void:
 
 		var enemy := node as Enemy
 		if enemy.is_inside_polygon(points):
-			enemy_captured = true
+			enemies_captured += 1
 			$Enemies.remove_child(enemy)
 			enemy.queue_free()
 			player.captured_enemy()
 
-	if enemy_captured:
+	if enemies_captured > 0:
+		if penalty < 8.0:
+			add_to_score(500 + 150 * enemies_captured * enemies_captured)
+			player.draw_controller.golden = true
+		else:
+			add_to_score(100 + 50 * enemies_captured * enemies_captured)
+			player.draw_controller.golden = false
 		player.draw_controller.active = false
 
 
-func on_player_shoot(direction: Vector2) -> void:
+func on_player_shoot(location: Vector2, direction: Vector2, billiard: bool = false) -> void:
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
-	new_projectile.init(player.position, direction)
+	new_projectile.billiard_ball = billiard
+	new_projectile.init(location, direction)
 	new_projectile.object_hit.connect(on_projectile_hit)
-	$Projectiles.add_child(new_projectile)
+	new_projectile.enemy_respawn.connect(on_projectile_expire)
+	$Projectiles.add_child.call_deferred(new_projectile)
 
 
-func on_projectile_hit(body: Node2D) -> void:
+func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: bool) -> void:
 	if body is Enemy:
+		if billiard_ball:
+			var new_direction := (body.position - projectile_position).normalized()
+			on_player_shoot(body.position, new_direction, true)
 		# Explode
-		add_to_score(250)
+		add_to_score(2500)
 		$Enemies.remove_child(body)
 		body.queue_free()
 	else:
-		add_to_score(100)
+		add_to_score(1000)
+
+
+func on_projectile_expire(location: Vector2) -> void:
+	var new_enemy := preload("res://src/game/enemy.tscn").instantiate()
+	new_enemy.position = location
+	$Enemies.add_child(new_enemy)
 
 
 func add_to_score(value: int) -> void:

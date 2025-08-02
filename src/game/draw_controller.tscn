@@ -1,7 +1,48 @@
-[gd_scene load_steps=9 format=3 uid="uid://wg70b3s3fcwt"]
+[gd_scene load_steps=19 format=3 uid="uid://wg70b3s3fcwt"]
 
 [ext_resource type="Script" uid="uid://b16kp1xpnh3d5" path="res://src/game/draw_controller.gd" id="1_pi2k6"]
 [ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="2_d6br6"]
+[ext_resource type="Texture2D" uid="uid://dibbag1itgjtj" path="res://assets/crosshair.png" id="3_m8v2c"]
+[ext_resource type="Texture2D" uid="uid://ce4mvaev2oe3r" path="res://assets/crosshair_line_normal.png" id="4_y6ehy"]
+
+[sub_resource type="Animation" id="Animation_m8v2c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FailedLine:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FailedLine:default_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FailedLine:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_d6br6"]
 resource_name = "failed"
@@ -43,36 +84,42 @@ tracks/2/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_m8v2c"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6ehy"]
+_data = {
+&"RESET": SubResource("Animation_m8v2c"),
+&"failed": SubResource("Animation_d6br6")
+}
+
+[sub_resource type="Animation" id="Animation_v0nhc"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FailedLine:width")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [10.0]
+"values": [Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("FailedLine:default_color")
+tracks/1/path = NodePath(".:default_color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 0, 0, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("FailedLine:visible")
+tracks/2/path = NodePath(".:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -80,12 +127,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6ehy"]
-_data = {
-&"RESET": SubResource("Animation_m8v2c"),
-&"failed": SubResource("Animation_d6br6")
 }
 
 [sub_resource type="Animation" id="Animation_y6ehy"]
@@ -128,50 +169,82 @@ tracks/2/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_v0nhc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:default_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ejigl"]
 _data = {
 &"RESET": SubResource("Animation_v0nhc"),
 &"success": SubResource("Animation_y6ehy")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6ehy"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0nhc"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(9, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejigl"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(18, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52s8n"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(27, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx44h"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(36, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cywju"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(45, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsh73"]
+atlas = ExtResource("3_m8v2c")
+region = Rect2(54, 0, 9, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pt5a7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6ehy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0nhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejigl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52s8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx44h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cywju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsh73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsh73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsh73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsh73")
+}],
+"loop": true,
+"name": &"gold",
+"speed": 12.0
+}]
 
 [node name="DrawController" type="Node2D"]
 script = ExtResource("1_pi2k6")
@@ -220,3 +293,19 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_ejigl")
 }
+
+[node name="Crosshair" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 10
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_pt5a7")
+animation = &"gold"
+frame_progress = 0.607314
+
+[node name="CrosshairLine" type="Line2D" parent="."]
+visible = false
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+texture = ExtResource("4_y6ehy")
+texture_mode = 1

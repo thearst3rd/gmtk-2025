@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 signal player_died()
 signal player_hit(current_health: int)
-signal shoot(direction: Vector2)
+signal shoot(location: Vector2, direction: Vector2)
 
 
 const SPEED := 180.0
@@ -62,7 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed(&"shoot"):
 		var direction := get_local_mouse_position().normalized()
-		shoot.emit(direction)
+		shoot.emit(position, direction, draw_controller.golden)
 		captured_enemies -= 1
 		if captured_enemies == 0:
 			draw_controller.active = true

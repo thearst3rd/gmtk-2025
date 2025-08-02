@@ -2,7 +2,7 @@ extends Node2D
 
 
 signal enemy_respawn(pos: Vector2)
-signal object_hit(other: Node2D)
+signal object_hit(other: Node2D, position: Vector2, billiard_ball: bool)
 
 
 @export var MAX_DISTANCE := 250
@@ -11,6 +11,7 @@ signal object_hit(other: Node2D)
 
 var initial_position: Vector2
 var direction: Vector2
+var billiard_ball := false
 
 
 func _physics_process(delta: float) -> void:
@@ -34,5 +35,5 @@ func on_body_entered(body: Node2D) -> void:
 	if body is Player or body.owner is Player:
 		return
 	# Fancy particle effects, etc.
-	object_hit.emit(body)
+	object_hit.emit(body, position, billiard_ball)
 	queue_free()
