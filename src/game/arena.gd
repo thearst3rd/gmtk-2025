@@ -68,7 +68,7 @@ func spawn_objects(chunk_start: Vector2) -> void:
 
 		# What do I even do with line-breaks here????
 		while existing_object_positions.any(
-			func is_far(x): return x.distance_squared_to(new_pos) < distance_sq_threshold
+			func is_close(x): return x.distance_squared_to(new_pos) < distance_sq_threshold
 		):
 			new_pos = Vector2(
 				randf_range(chunk_start.x, chunk_start.x + CHUNK_SIZE),
