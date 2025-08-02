@@ -32,12 +32,7 @@ func clean_directory(name: String) -> void:
 
 func export_preset(preset_name: String) -> void:
 	# I couldn't find a way to directly export a project via GDScript, so I invoke Godot to export instead
-	var pid := OS.create_instance(["--headless", "--export-release", preset_name])
-	# We shouldn't use OS.execute to create new Godot instances on MacOS (see docs for OS.get_executable_path), so we
-	# use OS.create_instance instead. OS.create_instance is not blocking however, so we have to block ourselves.
-	while OS.is_process_running(pid):
-		OS.delay_msec(100)
-
+	OS.execute(OS.get_executable_path(), ["--headless", "--export-release", preset_name])
 
 func zip_directory(name: String) -> void:
 	var dir := "res://.exports/%s" % [name]
@@ -82,5 +77,5 @@ func export_linux() -> void:
 
 
 func export_mac() -> void:
-	# TODO
-	pass
+	print("Exporting mac")
+	export_preset("macOS")

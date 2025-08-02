@@ -5,6 +5,7 @@ extends Control
 @onready var main_buttons: VBoxContainer = %MainButtons
 @onready var settings_panel: PanelContainer = %SettingsPanel
 @onready var title_and_buttons: VBoxContainer = %TitleAndButtons
+@onready var how_to_play: Control = %HowToPlay
 
 
 func _ready() -> void:
@@ -32,3 +33,8 @@ func _on_quit_button_pressed() -> void:
 func _on_settings_back_button_pressed() -> void:
 	title_and_buttons.show()
 	settings_panel.hide()
+
+
+func _on_how_to_play_button_pressed() -> void:
+	how_to_play.show()
+	how_to_play.load_screen()
