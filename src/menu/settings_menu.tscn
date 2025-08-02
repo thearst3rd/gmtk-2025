@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlev28jogwenh"]
+
+[ext_resource type="Script" uid="uid://b6f6t7dvddyj7" path="res://src/menu/settings_menu.gd" id="1_fvwh4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1qn2o"]
+font_size = 32
+
+[node name="SettingsMenu" type="VBoxContainer"]
+offset_left = 10.0
+offset_right = 163.0
+offset_bottom = 134.0
+script = ExtResource("1_fvwh4")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_1qn2o")
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 2
+
+[node name="SoundLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="MusicLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="FullscreenCheck" type="CheckButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fullscreen"
+
+[connection signal="value_changed" from="GridContainer/SoundSlider" to="." method="_on_sound_slider_value_changed"]
+[connection signal="value_changed" from="GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="toggled" from="FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]

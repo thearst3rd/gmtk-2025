@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxxlmxhb5u7uo"]
+[gd_scene load_steps=4 format=3 uid="uid://bxxlmxhb5u7uo"]
 
 [ext_resource type="Script" uid="uid://bdtqbxhggg64n" path="res://src/menu/main_menu.gd" id="1_g2ne3"]
 [ext_resource type="Texture2D" uid="uid://d3f2prlu6ymf5" path="res://assets/title_screen.png" id="2_o3lno"]
+[ext_resource type="PackedScene" uid="uid://dlev28jogwenh" path="res://src/menu/settings_menu.tscn" id="3_o3lno"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -29,7 +30,8 @@ text = "[font_size=56][center][b]Loop It Up,
 Cowboy![/b][/center][/font_size]"
 fit_content = true
 
-[node name="Buttons" type="VBoxContainer" parent="."]
+[node name="MainButtons" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 offset_left = 75.0
@@ -38,24 +40,57 @@ offset_right = 325.0
 offset_bottom = 395.0
 size_flags_horizontal = 4
 
-[node name="PlayButton" type="Button" parent="Buttons"]
+[node name="PlayButton" type="Button" parent="MainButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Play"
 
-[node name="CreditsButton" type="Button" parent="Buttons"]
+[node name="SettingsButton" type="Button" parent="MainButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="MainButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="Buttons"]
+[node name="QuitButton" type="Button" parent="MainButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "Quit"
 
-[connection signal="pressed" from="Buttons/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="Buttons/CreditsButton" to="." method="_on_credits_button_pressed"]
-[connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="SettingsPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 117.0
+offset_top = 245.0
+offset_right = 290.0
+offset_bottom = 424.0
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="SettingsMenu" parent="SettingsPanel/MarginContainer/VBoxContainer" instance=ExtResource("3_o3lno")]
+layout_mode = 2
+
+[node name="SettingsBackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="MainButtons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainButtons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MainButtons/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="MainButtons/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
