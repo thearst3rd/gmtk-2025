@@ -9,7 +9,8 @@ extends Control
 
 var main_licenses := [
 	["Godot Engine", Engine.get_license_text()],
-	["Bowling sound", "SPRTInd-Int_BowlingStrike_Zus_OwSfx_Hard by ZusIsKing -- https://freesound.org/s/766871/ -- License: Creative Commons 0"]
+	["Bowling sound", "SPRTInd-Int_BowlingStrike_Zus_OwSfx_Hard by ZusIsKing -- https://freesound.org/s/766871/ -- License: Creative Commons 0"],
+	["Hardpixel Regular Font", FileAccess.get_file_as_string("res://assets/fonts/hardpixel/1001fonts-hardpixel-eula.txt")],
 ]
 
 
