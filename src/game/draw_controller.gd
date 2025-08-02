@@ -20,6 +20,7 @@ signal line_complete(points: Array[Vector2], penalty: float)
 const PENALTY_THRESHOLD := 25.0
 
 var active := true
+var golden := false
 var drawing := false
 var drawing_points: Array[Vector2]
 var current_length: float
@@ -37,7 +38,13 @@ var current_length: float
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active:
+		if event is InputEventMouseMotion:
+			_draw_crosshair()
+			get_viewport().set_input_as_handled()
 		return
+	else:
+		$Crosshair.hide()
+		$CrosshairLine.hide()
 	if drawing:
 		if event is InputEventMouseMotion:
 			_drawing_moved()
@@ -99,7 +106,7 @@ func _drawing_finished() -> void:
 
 	var is_closed := _check_if_closed(drawing_points)
 
-	#print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
+	print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
 
 	if SHOW_DEBUG_COMPARISON:
 		comparison_line.clear_points()
@@ -201,3 +208,17 @@ func _drawing_succeeded(mean_point: Vector2) -> void:
 		success_tween.stop()
 	success_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	success_tween.tween_property(success_line, ^"position", Vector2.ZERO, 0.5)
+
+
+func _draw_crosshair() -> void:
+	var mouse_pos := get_local_mouse_position()
+	if golden:
+		$Crosshair.play("gold")
+		$CrosshairLine.texture = preload("res://assets/crosshair_line_gold.png")
+	else:
+		$Crosshair.play("default")
+		$CrosshairLine.texture = preload("res://assets/crosshair_line_normal.png")
+	$Crosshair.position = mouse_pos
+	$Crosshair.show()
+	$CrosshairLine.set_point_position(1, mouse_pos)
+	$CrosshairLine.show()
