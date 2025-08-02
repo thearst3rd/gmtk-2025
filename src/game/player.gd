@@ -13,7 +13,9 @@ const SPEED := 180.0
 var remaining_health := 3
 var captured_enemies := 0
 var vulnerable := true
+var dead := false
 
+@onready var collision_shape: CollisionShape2D = %CollisionShape2D
 @onready var draw_controller: DrawController = $DrawController
 @onready var i_frames: Timer = $IFrames
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -63,9 +65,11 @@ func player_damaged() -> void:
 	if remaining_health <= 0:
 		game_over_sound.play()
 		player_died.emit()
+		dead = true
 		animated_sprite.play(&"default")
 		animation_player.play(&"dead")
 		draw_controller.cancel_drawing()
+		collision_shape.disabled = true
 	else:
 		hurt_sound.play()
 		vulnerable = false
