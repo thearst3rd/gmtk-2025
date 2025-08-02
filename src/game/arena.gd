@@ -12,9 +12,10 @@ var is_game_over := false
 @export var GOLDEN_THRESHOLD := 8.0
 
 @onready var player: Player = %Player
-@onready var game_over: ColorRect = %GameOver
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
 @onready var how_to_play: Control = %HowToPlay
+@onready var pause_menu: ColorRect = %PauseMenu
+@onready var game_over: ColorRect = %GameOver
 
 var collect_sounds: Array[AudioStreamPlayer] = []
 
@@ -204,6 +205,9 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 func _on_player_player_died() -> void:
 	is_game_over = true
 	game_over.reveal(score)
+	# o7
+	pause_menu.get_parent().remove_child(pause_menu)
+	pause_menu.queue_free()
 
 
 func on_how_to_play_button_pressed() -> void:

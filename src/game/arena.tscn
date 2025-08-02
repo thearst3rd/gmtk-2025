@@ -80,19 +80,6 @@ collision_mask = 14
 
 [node name="ScoreLabels" type="Node" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
-visible = false
-
-[node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_ewcyu")]
-unique_name_in_owner = true
-visible = false
-
-[node name="HowToPlay" parent="CanvasLayer" instance=ExtResource("6_fulqo")]
-unique_name_in_owner = true
-visible = false
-
 [node name="EnemySpawner" type="Node" parent="."]
 script = ExtResource("4_44jrx")
 
@@ -145,10 +132,24 @@ libraries = {
 &"": SubResource("AnimationLibrary_1a4ih")
 }
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
+unique_name_in_owner = true
+visible = false
+
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_ewcyu")]
+unique_name_in_owner = true
+visible = false
+
+[node name="HowToPlay" parent="CanvasLayer" instance=ExtResource("6_fulqo")]
+unique_name_in_owner = true
+visible = false
+
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_player_died"]
 [connection signal="player_hit" from="Player" to="UI/Healthbar" method="_on_player_player_hit"]
 [connection signal="shoot" from="Player" to="." method="on_player_shoot"]
-[connection signal="exited" from="CanvasLayer/HowToPlay" to="." method="on_how_to_play_exited"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnTimer" to="EnemySpawner" method="_on_enemy_spawn_timer_timeout"]
 [connection signal="pressed" from="UI/HowToPlayButton" to="." method="on_how_to_play_button_pressed"]
+[connection signal="exited" from="CanvasLayer/HowToPlay" to="." method="on_how_to_play_exited"]
