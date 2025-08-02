@@ -156,8 +156,8 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 	if body is Enemy:
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
-			on_player_shoot(body.position, new_direction, 1)
-			if billiard_ball == 2:
+			on_player_shoot(body.position, new_direction, billiard_ball + 1)
+			if billiard_ball == 1:
 				print("Strike!!!")
 				var strike := AudioStreamPlayer2D.new()
 				strike.bus = &"Sound"

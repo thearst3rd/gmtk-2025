@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed(&"shoot"):
 		var direction := get_local_mouse_position().normalized()
-		shoot.emit(position, direction, 2 if draw_controller.golden else 0)
+		shoot.emit(position, direction, 1 if draw_controller.golden else 0)
 		shoot_sound.play()
 		captured_enemies -= 1
 		if captured_enemies == 0:
