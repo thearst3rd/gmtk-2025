@@ -26,8 +26,13 @@ var current_length: float
 
 @onready var line: Line2D = $Line2D
 @onready var comparison_line: Line2D = $ComparisonLine
+
 @onready var failed_line: Line2D = $FailedLine
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var fail_animation: AnimationPlayer = %FailAnimation
+@onready var success_line: Line2D = $SuccessLine
+@onready var success_animation: AnimationPlayer = %SuccessAnimation
+
+@onready var success_tween: Tween = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -113,7 +118,7 @@ func _drawing_finished() -> void:
 	# Now that the loop is finished, convert all of the points into their global position
 	for idx in range(len(drawing_points)):
 		drawing_points[idx] = drawing_points[idx] + global_position
-	$Line2D.clear_points()
+	_drawing_succeeded(mean_center)
 	line_complete.emit(drawing_points, penalty)
 
 
@@ -182,5 +187,20 @@ func _check_if_closed(points: Array[Vector2]) -> bool:
 func _drawing_failed() -> void:
 	line.hide()
 	failed_line.points = line.points
-	animation_player.stop()
-	animation_player.play(&"failed")
+	fail_animation.stop()
+	fail_animation.play(&"failed")
+
+
+func _drawing_succeeded(mean_point: Vector2) -> void:
+	line.hide()
+	success_line.clear_points()
+	for i in range(line.get_point_count()):
+		success_line.add_point(line.get_point_position(i) - mean_point)
+	success_line.position = mean_point
+	success_animation.stop()
+	success_animation.play(&"success")
+
+	if success_tween:
+		success_tween.stop()
+	success_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	success_tween.tween_property(success_line, ^"position", Vector2.ZERO, 0.5)
