@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 	else:
 		spawn_per_second_multiplier = 1
 	# After x time, increase the number of enemies spawned per second
-	if floor(arena.game_time / TIME_BETWEEN_ROUNDS) >= spawn_stage:
+	if floor(arena.game_time / TIME_BETWEEN_ROUNDS) > spawn_stage:
 		spawn_stage += 1
 		spawn_per_second = 0.25 + spawn_stage * spawn_stage * 0.5
 		min_enemies += 5
