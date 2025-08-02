@@ -42,7 +42,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "[center][font_size=64][b]Loop It Up, Cowboy![/b][/font_size]
+text = "[center][font_size=48][b]Loop It Up, Cowboy![/b][/font_size]
 
 [font_size=24]Created for GMTK Game Jam 2025[/font_size]
 

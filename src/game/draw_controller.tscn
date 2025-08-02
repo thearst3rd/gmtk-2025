@@ -1,25 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://wg70b3s3fcwt"]
+[gd_scene load_steps=3 format=3 uid="uid://wg70b3s3fcwt"]
 
 [ext_resource type="Script" uid="uid://b16kp1xpnh3d5" path="res://src/game/draw_controller.gd" id="1_pi2k6"]
-
-[sub_resource type="Gradient" id="Gradient_pi2k6"]
-colors = PackedColorArray(0.229091, 0.100259, 0.01817, 1, 0.516153, 0.328534, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_d6br6"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m8v2c"]
-seamless = true
-color_ramp = SubResource("Gradient_pi2k6")
-noise = SubResource("FastNoiseLite_d6br6")
+[ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="2_d6br6"]
 
 [node name="DrawController" type="Node2D"]
 script = ExtResource("1_pi2k6")
 
 [node name="Line2D" type="Line2D" parent="."]
 visible = false
+texture_repeat = 2
 points = PackedVector2Array(172, 93, 182, 84, 194, 81, 206, 85, 214, 84, 221, 81, 230, 87)
-texture = SubResource("NoiseTexture2D_m8v2c")
+texture = ExtResource("2_d6br6")
 texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="ComparisonLine" type="Line2D" parent="."]
 visible = false

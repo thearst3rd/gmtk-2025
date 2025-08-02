@@ -1,21 +1,36 @@
+class_name DrawController
 extends Node2D
 
 
-const SHOW_DEBUG_COMPARISON := true
+signal line_complete(points: Array[Vector2], penalty: float)
+
+
+@export var SHOW_DEBUG_COMPARISON := true
 
 # Distance (in pixels) a new point must be from the previous point
-const NEW_POINT_DIST_THRESHOLD := 20.0
+@export var NEW_POINT_DIST_THRESHOLD := 20.0
+
+# Maximum total length of a line
+@export var MAXIMUM_LINE_DISTANCE := 150.0
+
+# Maxmimum length of a gap between the end and start of a line.
+@export var MAXIMUM_GAP := 50.0
+
 # Penalty threshold - higher than this value and it doesn't count as a circle
 const PENALTY_THRESHOLD := 25.0
 
+var active := true
 var drawing := false
 var drawing_points: Array[Vector2]
+var current_length: float
 
 @onready var line: Line2D = $Line2D
 @onready var comparison_line: Line2D = $ComparisonLine
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not active:
+		return
 	if drawing:
 		if event is InputEventMouseMotion:
 			_drawing_moved()
@@ -32,6 +47,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _drawing_started() -> void:
 	drawing = true
 	drawing_points = []
+	current_length = 0.0
 	var current_mouse := get_local_mouse_position()
 	drawing_points.push_back(current_mouse)
 	line.clear_points()
@@ -42,12 +58,19 @@ func _drawing_started() -> void:
 
 
 func _drawing_moved() -> void:
+	if current_length > MAXIMUM_LINE_DISTANCE:
+		# Limit the total length of line a player can draw.
+		return
 	var last_point: Vector2 = drawing_points.back()
 	var current_mouse := get_local_mouse_position()
 	line.set_point_position(line.points.size() - 1, current_mouse)
-	if last_point.distance_squared_to(current_mouse) >= NEW_POINT_DIST_THRESHOLD * NEW_POINT_DIST_THRESHOLD:
+	var distance_squared_to_last_point := last_point.distance_squared_to(current_mouse)
+	if distance_squared_to_last_point >= NEW_POINT_DIST_THRESHOLD * NEW_POINT_DIST_THRESHOLD:
 		drawing_points.push_back(current_mouse)
 		line.add_point(current_mouse)
+		current_length += sqrt(distance_squared_to_last_point)
+		if _check_crossover(drawing_points):
+			_drawing_finished()
 
 
 func _drawing_finished() -> void:
@@ -60,31 +83,91 @@ func _drawing_finished() -> void:
 		return
 
 	# How good of a circle was this?
-	var mean_point := Vector2.ZERO
-	for point in drawing_points:
-		mean_point += point
-	mean_point /= drawing_points.size()
-	var mean_radius := 0.0
-	for point in drawing_points:
-		mean_radius += point.distance_to(mean_point)
-	mean_radius /= drawing_points.size()
+	var mean_circle := _get_mean_circle(drawing_points)
+	var mean_center: Vector2 = mean_circle[0]
+	var mean_radius: float = mean_circle[1]
 
+	var penalty := _check_circularity(drawing_points, mean_center, mean_radius)
+
+	var is_closed := _check_if_closed(drawing_points)
+
+	print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
+
+	if SHOW_DEBUG_COMPARISON:
+		comparison_line.clear_points()
+		for i in range(64):
+			comparison_line.add_point(mean_center + mean_radius * Vector2.from_angle(float(i) * TAU / 64.0))
+		if penalty < PENALTY_THRESHOLD and is_closed:
+			comparison_line.default_color = Color.GREEN
+		else:
+			comparison_line.default_color = Color.RED
+		comparison_line.show()
+
+	if is_closed:
+		# Now that the loop is finished, convert all of the points into their global position
+		for idx in range(len(drawing_points)):
+			drawing_points[idx] = drawing_points[idx] + global_position
+		$Line2D.clear_points()
+		line_complete.emit(drawing_points, penalty)
+
+
+# Check if the last point added has crossed over the existing line.
+func _check_crossover(points: Array[Vector2]) -> bool:
+	var last_point := points[-1]
+
+	var threshold_sq := NEW_POINT_DIST_THRESHOLD * NEW_POINT_DIST_THRESHOLD
+
+	if len(points) <= 4:
+		return false
+
+	# Ignore the last few points because they are likely to be within the threshold.
+	for point in points.slice(0, -3):
+		if last_point.distance_squared_to(point) < threshold_sq:
+			return true
+
+	return false
+
+
+# Get the mean circle given a group of points. Will return an array with the first element being the
+# center of the circle as a Vector2, and the second being the radius of the circle as a float.
+func _get_mean_circle(points: Array[Vector2]) -> Array:
+	var mean_point := Vector2.ZERO
+	for point in points:
+		mean_point += point
+	mean_point /= points.size()
+	var mean_radius := 0.0
+	for point in points:
+		mean_radius += point.distance_to(mean_point)
+	mean_radius /= points.size()
+
+	print("Center: ", mean_point + global_position)
+
+	return [mean_point, mean_radius]
+
+
+# How good of a circle is the list of points passed in. Will return a penalty value.
+func _check_circularity(points: Array[Vector2], center: Vector2, radius: float) -> float:
 	var total_penalty := 0.0
-	for point in drawing_points:
-		var new_point := (point - mean_point) / mean_radius
+	for point in points:
+		var new_point := (point - center) / radius
 		#print(new_point)
 		var penalty := absf(1 - new_point.length())
 		total_penalty += penalty
 	total_penalty /= drawing_points.size()
 	total_penalty *= 100.0
 	print(total_penalty)
+	return total_penalty
 
-	if SHOW_DEBUG_COMPARISON:
-		comparison_line.clear_points()
-		for i in range(64):
-			comparison_line.add_point(mean_point + mean_radius * Vector2.from_angle(float(i) * TAU / 64.0))
-		if total_penalty < PENALTY_THRESHOLD:
-			comparison_line.default_color = Color.GREEN
-		else:
-			comparison_line.default_color = Color.RED
-		comparison_line.show()
+
+# Determine if a loop is "close enough" to being closed.
+func _check_if_closed(points: Array[Vector2]) -> bool:
+	var last_point := points[-1]
+
+	var threshold_sq := MAXIMUM_GAP * MAXIMUM_GAP
+
+	# Only check the first part of the loop.
+	for point in points.slice(0, roundi(points.size() * 0.2)):
+		if last_point.distance_squared_to(point) < threshold_sq:
+			return true
+
+	return false
