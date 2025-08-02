@@ -5,6 +5,7 @@ var game_time: float = 0
 var score: int = 0
 
 @onready var player: Player = %Player
+@onready var game_over: ColorRect = %GameOver
 
 
 func _ready() -> void:
@@ -56,3 +57,7 @@ func on_projectile_hit(body: Node2D) -> void:
 func add_to_score(value: int) -> void:
 	score += value
 	%ScoreLabel.text = "Score: " + str(score)
+
+
+func _on_player_player_died() -> void:
+	game_over.reveal(score)

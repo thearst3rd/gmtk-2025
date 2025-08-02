@@ -19,6 +19,9 @@ var vulnerable := true
 
 
 func _physics_process(_delta: float) -> void:
+	if(remaining_health <= 0):
+		return
+
 	var direction := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	velocity = direction * SPEED
 
