@@ -18,6 +18,7 @@ var vulnerable := true
 @onready var i_frames: Timer = $IFrames
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var footsteps: Array[AudioStreamPlayer] = [$Footstep1, $Footstep2, $Footstep3]
+@onready var shoot_sound: AudioStreamPlayer = $ShootSound
 
 
 func _physics_process(_delta: float) -> void:
@@ -65,6 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"shoot"):
 		var direction := get_local_mouse_position().normalized()
 		shoot.emit(position, direction, 2 if draw_controller.golden else 0)
+		shoot_sound.play()
 		captured_enemies -= 1
 		if captured_enemies == 0:
 			draw_controller.active = true
