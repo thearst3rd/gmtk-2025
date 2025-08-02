@@ -64,6 +64,7 @@ func player_damaged() -> void:
 		player_died.emit()
 		animated_sprite.play(&"default")
 		animation_player.play(&"dead")
+		draw_controller.cancel_drawing()
 	else:
 		hurt_sound.play()
 		vulnerable = false

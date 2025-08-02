@@ -61,6 +61,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+func cancel_drawing() -> void:
+	if not drawing:
+		return
+	drawing = false
+	_drawing_failed()
+	drawing_sound.volume_db = -80.0
+
+
 func _drawing_started() -> void:
 	drawing = true
 	drawing_points = []
