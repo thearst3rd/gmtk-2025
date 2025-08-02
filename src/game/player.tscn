@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://fhqqde4xxf6l"]
+[gd_scene load_steps=16 format=3 uid="uid://fhqqde4xxf6l"]
 
 [ext_resource type="Script" uid="uid://bqway3p6o2xve" path="res://src/game/player.gd" id="1_7dijx"]
 [ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="2_7dijx"]

@@ -8,8 +8,11 @@ var game_time: float = 0
 var score: int = 0
 var loaded_chunks: Array[Vector2] = []
 
+@export var GOLDEN_THRESHOLD := 8.0
+
 @onready var player: Player = %Player
 @onready var game_over: ColorRect = %GameOver
+@onready var golden_sound: AudioStreamPlayer = $GoldenSound
 
 
 func _ready() -> void:
@@ -112,9 +115,10 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 			player.captured_enemy()
 
 	if enemies_captured > 0:
-		if penalty < 8.0:
+		if penalty < GOLDEN_THRESHOLD:
 			add_to_score(500 + 150 * enemies_captured * enemies_captured)
 			player.draw_controller.golden = true
+			golden_sound.play()
 		else:
 			add_to_score(100 + 50 * enemies_captured * enemies_captured)
 			player.draw_controller.golden = false
@@ -139,7 +143,7 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 				print("Strike!!!")
 				var strike := AudioStreamPlayer2D.new()
 				strike.bus = &"Sound"
-				strike.volume_db = -4.0
+				strike.volume_db = 4.0
 				strike.position = body.position
 				strike.stream = preload("res://assets/sfx/bowlingStrike.wav")
 				add_child(strike)

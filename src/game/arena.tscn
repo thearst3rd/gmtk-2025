@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=10 format=3 uid="uid://b0rybmr68nlu2"]
 
 [ext_resource type="Script" uid="uid://cquq3y345hu4n" path="res://src/game/arena.gd" id="1_0pbf2"]
 [ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c8nwccsmwim1l" path="res://src/game/enemy_spawner.gd" id="4_44jrx"]
 [ext_resource type="PackedScene" uid="uid://tvelcr33ffrq" path="res://src/game/healthbar.tscn" id="4_j5vg1"]
 [ext_resource type="PackedScene" uid="uid://c14gxuhmro3d5" path="res://src/game/game_over.tscn" id="5_ewcyu"]
+[ext_resource type="AudioStream" uid="uid://d3uxosxqoiwmg" path="res://assets/sfx/golden.wav" id="6_dwrxi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwrxi"]
 outline_size = 3
@@ -56,6 +57,11 @@ offset_right = 64.0
 offset_bottom = 32.0
 text = "Score: "
 label_settings = SubResource("LabelSettings_dwrxi")
+
+[node name="GoldenSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_dwrxi")
+volume_db = -5.0
+bus = &"Sound"
 
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_player_died"]
