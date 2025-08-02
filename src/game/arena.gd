@@ -7,6 +7,7 @@ const CHUNK_SIZE = 1000
 var game_time: float = 0
 var score: int = 0
 var loaded_chunks: Array[Vector2] = []
+var is_game_over := false
 
 @export var GOLDEN_THRESHOLD := 8.0
 
@@ -18,8 +19,11 @@ var collect_sounds: Array[AudioStreamPlayer] = []
 
 
 func _ready() -> void:
+	%DifficultyLabel.hide()
 	player.draw_controller.line_complete.connect(on_line_complete)
+	$EnemySpawner.difficulty_up.connect($AnimationPlayer.play.bind("difficulty_up"))
 	score = 0
+	is_game_over = false
 
 	var player_chunk_pos := Vector2(
 		round(player.position.x / CHUNK_SIZE) * CHUNK_SIZE,
@@ -49,6 +53,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if is_game_over:
+		return
+
 	game_time += delta
 
 	var player_chunk_pos := Vector2(
@@ -194,4 +201,5 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 
 
 func _on_player_player_died() -> void:
+	is_game_over = true
 	game_over.reveal(score)

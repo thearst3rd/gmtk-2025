@@ -1,8 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxxlmxhb5u7uo"]
+[gd_scene load_steps=8 format=3 uid="uid://bxxlmxhb5u7uo"]
 
 [ext_resource type="Script" uid="uid://bdtqbxhggg64n" path="res://src/menu/main_menu.gd" id="1_g2ne3"]
 [ext_resource type="Texture2D" uid="uid://d3f2prlu6ymf5" path="res://assets/title_screen.png" id="2_o3lno"]
 [ext_resource type="PackedScene" uid="uid://dlev28jogwenh" path="res://src/menu/settings_menu.tscn" id="3_o3lno"]
+[ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="3_wkckh"]
+[ext_resource type="Theme" uid="uid://8im330q2fq1g" path="res://resources/title_screen_theme.tres" id="4_pdh6n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_such8"]
+line_spacing = 25.0
+font = ExtResource("3_wkckh")
+font_size = 72
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkckh"]
+bg_color = Color(0.25, 0.25, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.303233, 0.303233, 0.303233, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -19,78 +40,96 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_o3lno")
 
-[node name="Title" type="RichTextLabel" parent="."]
-layout_mode = 2
-offset_left = 23.0
-offset_top = 51.0
-offset_right = 397.0
-offset_bottom = 205.0
-bbcode_enabled = true
-text = "[font_size=56][center][b]Loop It Up, 
-Cowboy![/b][/center][/font_size]"
-fit_content = true
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.75
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="MainButtons" type="VBoxContainer" parent="."]
+[node name="TitleAndButtons" type="VBoxContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/TitleAndButtons"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Loop It Up,
+Cowboy!"
+label_settings = SubResource("LabelSettings_such8")
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/TitleAndButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="MainButtons" type="VBoxContainer" parent="CenterContainer/TitleAndButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-offset_left = 75.0
-offset_top = 245.0
-offset_right = 325.0
-offset_bottom = 395.0
 size_flags_horizontal = 4
 
-[node name="PlayButton" type="Button" parent="MainButtons"]
+[node name="PlayButton" type="Button" parent="CenterContainer/TitleAndButtons/MainButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
+theme = ExtResource("4_pdh6n")
+theme_type_variation = &"PlayButton"
 theme_override_font_sizes/font_size = 36
 text = "Play"
 
-[node name="SettingsButton" type="Button" parent="MainButtons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/TitleAndButtons/MainButtons"]
+layout_mode = 2
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 3
+theme = ExtResource("4_pdh6n")
 text = "Settings"
 
-[node name="CreditsButton" type="Button" parent="MainButtons"]
+[node name="CreditsButton" type="Button" parent="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 3
+theme = ExtResource("4_pdh6n")
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="MainButtons"]
+[node name="QuitButton" type="Button" parent="CenterContainer/TitleAndButtons/MainButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("4_pdh6n")
 theme_override_font_sizes/font_size = 20
 text = "Quit"
 
-[node name="SettingsPanel" type="PanelContainer" parent="."]
+[node name="SettingsPanel" type="PanelContainer" parent="CenterContainer"]
+unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_left = 117.0
-offset_top = 245.0
-offset_right = 290.0
-offset_bottom = 424.0
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wkckh")
 metadata/_edit_group_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/SettingsPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/SettingsPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="SettingsMenu" parent="SettingsPanel/MarginContainer/VBoxContainer" instance=ExtResource("3_o3lno")]
+[node name="SettingsMenu" parent="CenterContainer/SettingsPanel/MarginContainer/VBoxContainer" instance=ExtResource("3_o3lno")]
 layout_mode = 2
 
-[node name="SettingsBackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+[node name="SettingsBackButton" type="Button" parent="CenterContainer/SettingsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_wkckh")
 text = "Back"
 
-[connection signal="pressed" from="MainButtons/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="MainButtons/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MainButtons/CreditsButton" to="." method="_on_credits_button_pressed"]
-[connection signal="pressed" from="MainButtons/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CenterContainer/SettingsPanel/MarginContainer/VBoxContainer/SettingsBackButton" to="." method="_on_settings_back_button_pressed"]

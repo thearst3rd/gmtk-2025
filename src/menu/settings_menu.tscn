@@ -1,14 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlev28jogwenh"]
+[gd_scene load_steps=5 format=3 uid="uid://dlev28jogwenh"]
 
 [ext_resource type="Script" uid="uid://b6f6t7dvddyj7" path="res://src/menu/settings_menu.gd" id="1_fvwh4"]
+[ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="2_6g5bj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1qn2o"]
+font = ExtResource("2_6g5bj")
 font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ex87"]
+font = ExtResource("2_6g5bj")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="SettingsMenu" type="VBoxContainer"]
 offset_left = 10.0
 offset_right = 163.0
 offset_bottom = 134.0
+theme_override_constants/separation = 15
 script = ExtResource("1_fvwh4")
 
 [node name="Title" type="Label" parent="."]
@@ -19,11 +29,14 @@ horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 15
 columns = 2
 
 [node name="SoundLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Sound"
+label_settings = SubResource("LabelSettings_7ex87")
 
 [node name="SoundSlider" type="HSlider" parent="GridContainer"]
 unique_name_in_owner = true
@@ -37,6 +50,7 @@ value = 0.5
 [node name="MusicLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Music"
+label_settings = SubResource("LabelSettings_7ex87")
 
 [node name="MusicSlider" type="HSlider" parent="GridContainer"]
 unique_name_in_owner = true
@@ -50,6 +64,9 @@ value = 0.5
 [node name="FullscreenCheck" type="CheckButton" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_6g5bj")
 text = "Fullscreen"
 
 [connection signal="value_changed" from="GridContainer/SoundSlider" to="." method="_on_sound_slider_value_changed"]

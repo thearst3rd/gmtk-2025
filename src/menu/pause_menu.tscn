@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvr4gp8bis72j"]
+[gd_scene load_steps=6 format=3 uid="uid://dvr4gp8bis72j"]
 
 [ext_resource type="Script" uid="uid://fjwvlfx1q1m0" path="res://src/menu/pause_menu.gd" id="1_ld5fl"]
 [ext_resource type="PackedScene" uid="uid://dlev28jogwenh" path="res://src/menu/settings_menu.tscn" id="2_2omny"]
+[ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="2_w7oy8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w7oy8"]
+font = ExtResource("2_w7oy8")
+font_size = 56
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqdws"]
+bg_color = Color(0.25, 0.25, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.303233, 0.303233, 0.303233, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="PauseMenu" type="ColorRect"]
 process_mode = 3
@@ -13,51 +30,60 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 script = ExtResource("1_ld5fl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 51.0
-offset_right = 342.0
-offset_bottom = 123.0
-bbcode_enabled = true
-text = "[font_size=52][i]Paused[/i][/font_size]"
-fit_content = true
-scroll_active = false
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Buttons" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(250, 0)
-layout_mode = 0
-offset_left = 68.0
-offset_top = 272.0
-offset_right = 318.0
-offset_bottom = 371.0
-
-[node name="ResumeButton" type="Button" parent="Buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="RichTextLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_w7oy8")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Buttons" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_w7oy8")
 theme_override_font_sizes/font_size = 32
 text = "Resume"
 
-[node name="QuitButton" type="Button" parent="Buttons"]
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer/Buttons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_w7oy8")
 theme_override_font_sizes/font_size = 24
 text = "Quit to Menu"
 
-[node name="SettingsPanel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 387.0
-offset_top = 246.0
-offset_right = 560.0
-offset_bottom = 390.0
+[node name="SettingsPanel" type="PanelContainer" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lqdws")
 metadata/_edit_group_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer/HBoxContainer/SettingsPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="SettingsMenu" parent="SettingsPanel/MarginContainer" instance=ExtResource("2_2omny")]
+[node name="SettingsMenu" parent="CenterContainer/VBoxContainer/HBoxContainer/SettingsPanel/MarginContainer" instance=ExtResource("2_2omny")]
 layout_mode = 2
 
-[connection signal="pressed" from="Buttons/ResumeButton" to="." method="unpause"]
-[connection signal="pressed" from="Buttons/QuitButton" to="." method="quit"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/Buttons/ResumeButton" to="." method="unpause"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/Buttons/QuitButton" to="." method="quit"]
