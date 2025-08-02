@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://0jkims4wxkeg"]
+[gd_scene load_steps=9 format=3 uid="uid://0jkims4wxkeg"]
 
 [ext_resource type="Script" uid="uid://cciem2led2btp" path="res://src/game/enemy_projectile.gd" id="1_0piwa"]
 [ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="2_0piwa"]
+[ext_resource type="AudioStream" uid="uid://bipwvwc6iypfl" path="res://assets/sfx/hurt.wav" id="3_ykfnh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ykfnh"]
 radius = 19.0
@@ -116,6 +117,9 @@ shape = SubResource("CircleShape2D_ykfnh")
 libraries = {
 &"": SubResource("AnimationLibrary_kfs3b")
 }
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ykfnh")
 
 [connection signal="area_entered" from="." to="." method="on_body_entered"]
 [connection signal="body_entered" from="." to="." method="on_body_entered"]

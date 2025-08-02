@@ -70,6 +70,7 @@ _data = {
 }
 
 [node name="ScoreLabel" type="Node2D"]
+z_index = 5
 script = ExtResource("1_rq8ys")
 
 [node name="Label" type="Label" parent="."]
