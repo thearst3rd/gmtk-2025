@@ -140,7 +140,7 @@ func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> 
 
 	if enemies_captured > 0:
 		if golden:
-			add_to_score(500 + 150 * enemies_captured * enemies_captured, center)
+			add_to_score(200 + 100 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = true
 			golden_sound.play()
 		else:
@@ -169,7 +169,7 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
 			on_player_shoot(body.position, new_direction, billiard_ball + 1)
-			if billiard_ball == 1:
+			if billiard_ball == 2:
 				print("Strike!!!")
 				var strike := AudioStreamPlayer2D.new()
 				strike.bus = &"Sound"
@@ -179,12 +179,21 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 				add_child(strike)
 				strike.finished.connect(strike.queue_free)
 				strike.play()
-		# Explode
-		add_to_score(2500, body.position)
+			add_to_score(billiard_ball * 1000, projectile_position)
+		else:
+			add_to_score(1000, body.position)
+		create_explosion(projectile_position)
 		$Enemies.remove_child(body)
 		body.queue_free()
 	else:
-		add_to_score(1000, body.position)
+		add_to_score(500 + billiard_ball * 1000, projectile_position)
+		create_explosion(projectile_position)
+
+
+func create_explosion(location: Vector2) -> void:
+	var explosion = preload("res://src/game/explosion.tscn").instantiate()
+	explosion.position = location
+	add_child(explosion)
 
 
 func on_projectile_expire(location: Vector2) -> void:
