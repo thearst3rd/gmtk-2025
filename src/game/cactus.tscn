@@ -12,6 +12,9 @@ size = Vector2(18, 25)
 size = Vector2(18, 25)
 
 [node name="Cactus" type="Area2D" groups=["HurtsPlayer"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_326do")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)

@@ -22,8 +22,11 @@ max_size = 2000.0
 [node name="Player" parent="." instance=ExtResource("1_p3gke")]
 unique_name_in_owner = true
 position = Vector2(451, 203)
+collision_mask = 14
 
 [node name="Enemies" type="Node" parent="."]
+
+[node name="Objects" type="Node" parent="."]
 
 [node name="Projectiles" type="Node" parent="."]
 
@@ -41,9 +44,6 @@ script = ExtResource("4_44jrx")
 
 [node name="EnemySpawnTimer" type="Timer" parent="EnemySpawner"]
 autostart = true
-
-[node name="Cactus" parent="." instance=ExtResource("3_0pbf2")]
-position = Vector2(351, 356)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

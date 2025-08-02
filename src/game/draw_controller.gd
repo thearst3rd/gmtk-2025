@@ -5,7 +5,7 @@ extends Node2D
 signal line_complete(points: Array[Vector2], penalty: float)
 
 
-@export var SHOW_DEBUG_COMPARISON := true
+@export var SHOW_DEBUG_COMPARISON := false
 
 # Distance (in pixels) a new point must be from the previous point
 @export var NEW_POINT_DIST_THRESHOLD := 20.0
@@ -26,6 +26,13 @@ var current_length: float
 
 @onready var line: Line2D = $Line2D
 @onready var comparison_line: Line2D = $ComparisonLine
+
+@onready var failed_line: Line2D = $FailedLine
+@onready var fail_animation: AnimationPlayer = %FailAnimation
+@onready var success_line: Line2D = $SuccessLine
+@onready var success_animation: AnimationPlayer = %SuccessAnimation
+
+@onready var success_tween: Tween = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -80,6 +87,7 @@ func _drawing_finished() -> void:
 
 	if drawing_points.size() < 3:
 		print("Not enough points")
+		_drawing_failed()
 		return
 
 	# How good of a circle was this?
@@ -91,7 +99,7 @@ func _drawing_finished() -> void:
 
 	var is_closed := _check_if_closed(drawing_points)
 
-	print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
+	#print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
 
 	if SHOW_DEBUG_COMPARISON:
 		comparison_line.clear_points()
@@ -103,12 +111,15 @@ func _drawing_finished() -> void:
 			comparison_line.default_color = Color.RED
 		comparison_line.show()
 
-	if is_closed:
-		# Now that the loop is finished, convert all of the points into their global position
-		for idx in range(len(drawing_points)):
-			drawing_points[idx] = drawing_points[idx] + global_position
-		$Line2D.clear_points()
-		line_complete.emit(drawing_points, penalty)
+	if not is_closed:
+		_drawing_failed()
+		return
+
+	# Now that the loop is finished, convert all of the points into their global position
+	for idx in range(len(drawing_points)):
+		drawing_points[idx] = drawing_points[idx] + global_position
+	_drawing_succeeded(mean_center)
+	line_complete.emit(drawing_points, penalty)
 
 
 # Check if the last point added has crossed over the existing line.
@@ -140,8 +151,6 @@ func _get_mean_circle(points: Array[Vector2]) -> Array:
 		mean_radius += point.distance_to(mean_point)
 	mean_radius /= points.size()
 
-	print("Center: ", mean_point + global_position)
-
 	return [mean_point, mean_radius]
 
 
@@ -155,7 +164,6 @@ func _check_circularity(points: Array[Vector2], center: Vector2, radius: float) 
 		total_penalty += penalty
 	total_penalty /= drawing_points.size()
 	total_penalty *= 100.0
-	print(total_penalty)
 	return total_penalty
 
 
@@ -171,3 +179,25 @@ func _check_if_closed(points: Array[Vector2]) -> bool:
 			return true
 
 	return false
+
+
+func _drawing_failed() -> void:
+	line.hide()
+	failed_line.points = line.points
+	fail_animation.stop()
+	fail_animation.play(&"failed")
+
+
+func _drawing_succeeded(mean_point: Vector2) -> void:
+	line.hide()
+	success_line.clear_points()
+	for i in range(line.get_point_count()):
+		success_line.add_point(line.get_point_position(i) - mean_point)
+	success_line.position = mean_point
+	success_animation.stop()
+	success_animation.play(&"success")
+
+	if success_tween:
+		success_tween.stop()
+	success_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	success_tween.tween_property(success_line, ^"position", Vector2.ZERO, 0.5)

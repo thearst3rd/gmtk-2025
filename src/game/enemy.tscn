@@ -60,6 +60,8 @@ animations = [{
 }]
 
 [node name="Enemy" type="CharacterBody2D" groups=["HurtsPlayer"]]
+collision_layer = 2
+collision_mask = 31
 script = ExtResource("1_askbf")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["HurtsPlayer"]]
