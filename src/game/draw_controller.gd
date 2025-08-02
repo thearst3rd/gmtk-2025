@@ -35,6 +35,8 @@ var current_length: float
 
 @onready var success_tween: Tween = null
 
+@onready var drawing_sound: AudioStreamPlayer = $DrawingSound
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active:
@@ -69,6 +71,7 @@ func _drawing_started() -> void:
 	line.add_point(current_mouse)
 	line.show()
 	comparison_line.hide()
+	drawing_sound.volume_db = 0.0
 
 
 func _drawing_moved() -> void:
@@ -89,6 +92,7 @@ func _drawing_moved() -> void:
 
 func _drawing_finished() -> void:
 	drawing = false
+	drawing_sound.volume_db = -80.0
 	if not SHOW_DEBUG_COMPARISON:
 		line.hide()
 
