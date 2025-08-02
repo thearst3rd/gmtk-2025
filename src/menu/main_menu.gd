@@ -2,6 +2,8 @@ extends Control
 
 
 @onready var quit_button: Button = %QuitButton
+@onready var main_buttons: VBoxContainer = %MainButtons
+@onready var settings_panel: PanelContainer = $SettingsPanel
 
 
 func _ready() -> void:
@@ -13,9 +15,19 @@ func _on_play_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://src/game/arena.tscn")
 
 
+func _on_settings_button_pressed() -> void:
+	main_buttons.hide()
+	settings_panel.show()
+
+
 func _on_credits_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://src/menu/credits_menu.tscn")
 
 
 func _on_quit_button_pressed() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
+
+func _on_settings_back_button_pressed() -> void:
+	main_buttons.show()
+	settings_panel.hide()

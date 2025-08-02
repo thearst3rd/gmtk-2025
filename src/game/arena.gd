@@ -8,8 +8,13 @@ var game_time: float = 0
 var score: int = 0
 var loaded_chunks: Array[Vector2] = []
 
+@export var GOLDEN_THRESHOLD := 8.0
+
 @onready var player: Player = %Player
 @onready var game_over: ColorRect = %GameOver
+@onready var golden_sound: AudioStreamPlayer = $GoldenSound
+
+var collect_sounds: Array[AudioStreamPlayer] = []
 
 
 func _ready() -> void:
@@ -26,6 +31,16 @@ func _ready() -> void:
 		for y in range(-1, 2):
 			var chunk_start = player_chunk_pos + Vector2(x, y) * CHUNK_SIZE
 			spawn_objects(chunk_start)
+
+	# Create a few "collection" sounds at varying pitches for use when collecting enemies
+	for i in range(5):
+		var sound := AudioStreamPlayer.new()
+		sound.bus = &"Sound"
+		sound.volume_db = -3.0
+		sound.stream = preload("res://assets/sfx/collect.wav")
+		sound.pitch_scale = 1.0 + float(i) / 3.0
+		collect_sounds.push_back(sound)
+		add_child(sound)
 
 
 func _process(delta: float) -> void:
@@ -112,16 +127,23 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 			player.captured_enemy()
 
 	if enemies_captured > 0:
-		if penalty < 8.0:
+		if penalty < GOLDEN_THRESHOLD:
 			add_to_score(500 + 150 * enemies_captured * enemies_captured)
 			player.draw_controller.golden = true
+			golden_sound.play()
 		else:
 			add_to_score(100 + 50 * enemies_captured * enemies_captured)
 			player.draw_controller.golden = false
 		player.draw_controller.active = false
 
+		for i in range(enemies_captured):
+			var sound := collect_sounds[mini(i, collect_sounds.size() - 1)]
+			sound.stop()
+			sound.play()
+			await get_tree().create_timer(0.15).timeout
 
-func on_player_shoot(location: Vector2, direction: Vector2, billiard: bool = false) -> void:
+
+func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -> void:
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.billiard_ball = billiard
 	new_projectile.init(location, direction)
@@ -130,11 +152,21 @@ func on_player_shoot(location: Vector2, direction: Vector2, billiard: bool = fal
 	$Projectiles.add_child.call_deferred(new_projectile)
 
 
-func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: bool) -> void:
+func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: int) -> void:
 	if body is Enemy:
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
-			on_player_shoot(body.position, new_direction, true)
+			on_player_shoot(body.position, new_direction, billiard_ball + 1)
+			if billiard_ball == 1:
+				print("Strike!!!")
+				var strike := AudioStreamPlayer2D.new()
+				strike.bus = &"Sound"
+				strike.volume_db = 4.0
+				strike.position = body.position
+				strike.stream = preload("res://assets/sfx/bowlingStrike.wav")
+				add_child(strike)
+				strike.finished.connect(strike.queue_free)
+				strike.play()
 		# Explode
 		add_to_score(2500)
 		$Enemies.remove_child(body)

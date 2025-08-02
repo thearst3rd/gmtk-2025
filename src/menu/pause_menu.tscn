@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvr4gp8bis72j"]
+[gd_scene load_steps=3 format=3 uid="uid://dvr4gp8bis72j"]
 
 [ext_resource type="Script" uid="uid://fjwvlfx1q1m0" path="res://src/menu/pause_menu.gd" id="1_ld5fl"]
+[ext_resource type="PackedScene" uid="uid://dlev28jogwenh" path="res://src/menu/settings_menu.tscn" id="2_2omny"]
 
 [node name="PauseMenu" type="ColorRect"]
 process_mode = 3
@@ -40,6 +41,23 @@ text = "Resume"
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Quit to Menu"
+
+[node name="SettingsPanel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 246.0
+offset_right = 560.0
+offset_bottom = 390.0
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SettingsMenu" parent="SettingsPanel/MarginContainer" instance=ExtResource("2_2omny")]
+layout_mode = 2
 
 [connection signal="pressed" from="Buttons/ResumeButton" to="." method="unpause"]
 [connection signal="pressed" from="Buttons/QuitButton" to="." method="quit"]

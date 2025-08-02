@@ -3,24 +3,28 @@ extends CharacterBody2D
 
 
 @export var SPEED := 80.0
+@export var FOOTSTEP_CHANCE := 0.4
+
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var footsteps: Array[AudioStreamPlayer2D] = [$Footstep1, $Footstep2, $Footstep3]
 
 
-var is_lassoed := false
+func _ready() -> void:
+	animated_sprite.play(&"walk")
+	animated_sprite.frame_progress = randf() # So that all enemies are randomly offset from another
 
 
 func _physics_process(_delta: float) -> void:
-	# Don't apply this movement if the enemy is lassoed
-	if not is_lassoed:
-		# Set direction to vector at the player
-		var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
-		var player_position := player.global_position
-		var direction := (player_position - position).normalized()
-		velocity = direction * SPEED
-		$AnimatedSprite2D.play("walk")
-		move_and_slide()
-	else:
-		# Set position to... slowly circling the player?
-		pass
+	# Set direction to vector at the player
+	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
+	if not player:
+		animated_sprite.play(&"default")
+		return
+
+	var player_position := player.global_position
+	var direction := (player_position - position).normalized()
+	velocity = direction * SPEED
+	move_and_slide()
 
 
 func is_inside_polygon(points: Array[Vector2]) -> bool:
@@ -43,3 +47,9 @@ func is_inside_polygon(points: Array[Vector2]) -> bool:
 			num_points_inside += 1
 
 	return num_points_inside >= 3
+
+
+func _on_frame_changed() -> void:
+	if animated_sprite.frame in [1, 3]:
+		if randf() < FOOTSTEP_CHANCE:
+			footsteps.pick_random().play()
