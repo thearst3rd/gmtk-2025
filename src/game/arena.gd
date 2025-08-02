@@ -14,6 +14,7 @@ var is_game_over := false
 @onready var player: Player = %Player
 @onready var game_over: ColorRect = %GameOver
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
+@onready var how_to_play: Control = %HowToPlay
 
 var collect_sounds: Array[AudioStreamPlayer] = []
 
@@ -203,3 +204,15 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 func _on_player_player_died() -> void:
 	is_game_over = true
 	game_over.reveal(score)
+
+
+func on_how_to_play_button_pressed() -> void:
+	get_tree().paused = true
+	$UI.hide()
+	how_to_play.show()
+	how_to_play.load_screen()
+
+
+func on_how_to_play_exited() -> void:
+	get_tree().paused = false
+	$UI.show()

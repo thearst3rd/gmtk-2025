@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxxlmxhb5u7uo"]
+[gd_scene load_steps=9 format=3 uid="uid://bxxlmxhb5u7uo"]
 
 [ext_resource type="Script" uid="uid://bdtqbxhggg64n" path="res://src/menu/main_menu.gd" id="1_g2ne3"]
 [ext_resource type="Texture2D" uid="uid://d3f2prlu6ymf5" path="res://assets/title_screen.png" id="2_o3lno"]
 [ext_resource type="PackedScene" uid="uid://dlev28jogwenh" path="res://src/menu/settings_menu.tscn" id="3_o3lno"]
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="3_wkckh"]
 [ext_resource type="Theme" uid="uid://8im330q2fq1g" path="res://resources/title_screen_theme.tres" id="4_pdh6n"]
+[ext_resource type="PackedScene" uid="uid://bqw737m45kyq4" path="res://src/menu/how_to_play.tscn" id="6_pdh6n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_such8"]
 line_spacing = 25.0
@@ -79,6 +80,12 @@ theme_type_variation = &"PlayButton"
 theme_override_font_sizes/font_size = 36
 text = "Play"
 
+[node name="HowToPlayButton" type="Button" parent="CenterContainer/TitleAndButtons/MainButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("4_pdh6n")
+text = "How To Play"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/TitleAndButtons/MainButtons"]
 layout_mode = 2
 
@@ -128,7 +135,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("3_wkckh")
 text = "Back"
 
+[node name="HowToPlay" parent="." instance=ExtResource("6_pdh6n")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CenterContainer/TitleAndButtons/MainButtons/QuitButton" to="." method="_on_quit_button_pressed"]

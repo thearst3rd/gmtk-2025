@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=16 format=3 uid="uid://b0rybmr68nlu2"]
 
 [ext_resource type="Script" uid="uid://cquq3y345hu4n" path="res://src/game/arena.gd" id="1_0pbf2"]
 [ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://tvelcr33ffrq" path="res://src/game/healthbar.tscn" id="4_j5vg1"]
 [ext_resource type="PackedScene" uid="uid://c14gxuhmro3d5" path="res://src/game/game_over.tscn" id="5_ewcyu"]
 [ext_resource type="AudioStream" uid="uid://d3uxosxqoiwmg" path="res://assets/sfx/golden.wav" id="6_dwrxi"]
+[ext_resource type="PackedScene" uid="uid://bqw737m45kyq4" path="res://src/menu/how_to_play.tscn" id="6_fulqo"]
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="8_evlm7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwrxi"]
@@ -23,6 +24,21 @@ font_color = Color(0.947406, 3.77826e-06, 1.73271e-06, 1)
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_fulqo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/DifficultyLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_evlm7"]
 resource_name = "difficulty_up"
 length = 1.5
@@ -37,21 +53,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_fulqo"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI/DifficultyLabel:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1a4ih"]
@@ -88,6 +89,10 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
+[node name="HowToPlay" parent="CanvasLayer" instance=ExtResource("6_fulqo")]
+unique_name_in_owner = true
+visible = false
+
 [node name="EnemySpawner" type="Node" parent="."]
 script = ExtResource("4_44jrx")
 
@@ -95,6 +100,14 @@ script = ExtResource("4_44jrx")
 autostart = true
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HowToPlayButton" type="Button" parent="UI"]
+offset_left = 249.0
+offset_top = 16.0
+offset_right = 367.0
+offset_bottom = 41.0
+theme_override_fonts/font = ExtResource("8_evlm7")
+text = "How To Play"
 
 [node name="Healthbar" parent="UI" instance=ExtResource("4_j5vg1")]
 
@@ -136,4 +149,6 @@ libraries = {
 [connection signal="player_died" from="Player" to="CanvasLayer/GameOver" method="_on_player_player_died"]
 [connection signal="player_hit" from="Player" to="UI/Healthbar" method="_on_player_player_hit"]
 [connection signal="shoot" from="Player" to="." method="on_player_shoot"]
+[connection signal="exited" from="CanvasLayer/HowToPlay" to="." method="on_how_to_play_exited"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnTimer" to="EnemySpawner" method="_on_enemy_spawn_timer_timeout"]
+[connection signal="pressed" from="UI/HowToPlayButton" to="." method="on_how_to_play_button_pressed"]

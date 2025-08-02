@@ -1,0 +1,662 @@
+[gd_scene load_steps=38 format=3 uid="uid://bqw737m45kyq4"]
+
+[ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="1_71mj8"]
+[ext_resource type="Script" uid="uid://vlnlq72dmsma" path="res://src/menu/how_to_play.gd" id="1_eh6s7"]
+[ext_resource type="Texture2D" uid="uid://pfnaavk0cv6r" path="res://assets/background.png" id="2_x25no"]
+[ext_resource type="Texture2D" uid="uid://b2n2i3g4ebmlp" path="res://assets/rope.png" id="5_a6atb"]
+[ext_resource type="Texture2D" uid="uid://drtqu0kbaqtw6" path="res://assets/good_guy.png" id="6_eh6s7"]
+[ext_resource type="PackedScene" uid="uid://6tyx4sklhchk" path="res://src/game/cactus.tscn" id="6_w406u"]
+[ext_resource type="Texture2D" uid="uid://ce4mvaev2oe3r" path="res://assets/crosshair_line_normal.png" id="7_neixi"]
+[ext_resource type="Texture2D" uid="uid://dibbag1itgjtj" path="res://assets/crosshair.png" id="8_esxau"]
+[ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="10_eh6s7"]
+[ext_resource type="Texture2D" uid="uid://b2wgf04ag0man" path="res://assets/crosshair_line_gold.png" id="10_esxau"]
+[ext_resource type="Texture2D" uid="uid://le4hu0xihpxw" path="res://assets/bad_guy.png" id="11_vh2sv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jffjq"]
+bg_color = Color(0.95041, 0.891967, 0.826512, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.199441, 0.136198, 0.0445125, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_t8g4s"]
+font = ExtResource("1_71mj8")
+font_size = 40
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkm2x"]
+atlas = ExtResource("6_eh6s7")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2sim"]
+atlas = ExtResource("6_eh6s7")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_artl0"]
+atlas = ExtResource("6_eh6s7")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uurce"]
+atlas = ExtResource("6_eh6s7")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmfhk"]
+atlas = ExtResource("6_eh6s7")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vh2sv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkm2x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2sim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_artl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uurce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmfhk")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysghf"]
+atlas = ExtResource("11_vh2sv")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8ibl"]
+atlas = ExtResource("11_vh2sv")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln6ok"]
+atlas = ExtResource("11_vh2sv")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icdxx"]
+atlas = ExtResource("11_vh2sv")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2fb8"]
+atlas = ExtResource("11_vh2sv")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vbk2n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysghf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8ibl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ln6ok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_icdxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2fb8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esxau"]
+atlas = ExtResource("8_esxau")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh6s7"]
+atlas = ExtResource("8_esxau")
+region = Rect2(9, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vh2sv"]
+atlas = ExtResource("8_esxau")
+region = Rect2(18, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbk2n"]
+atlas = ExtResource("8_esxau")
+region = Rect2(27, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umc5n"]
+atlas = ExtResource("8_esxau")
+region = Rect2(36, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbis5"]
+atlas = ExtResource("8_esxau")
+region = Rect2(45, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eto8w"]
+atlas = ExtResource("8_esxau")
+region = Rect2(54, 0, 9, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fuem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh6s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vh2sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbk2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umc5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbis5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eto8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eto8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eto8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eto8w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Animation" id="Animation_5r8ea"]
+resource_name = "lasso_view"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LassoView:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LassoView/Line2D:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0), PackedVector2Array(0, 0, 14, -31), PackedVector2Array(0, 0, 14, -31, 46, -55), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10), PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LassoView/Line2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_puber"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LassoView:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LassoView/Line2D:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LassoView/Line2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ProjectileView:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ProjectileView/Line2D:points")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(223, 340, 403, 270)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ProjectileView/Sprite2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(403, 270)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ProjectileView/Line2D:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ProjectileView/Sprite2D:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ProjectileView/EnemyProjectile:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ProjectileView/EnemyProjectile:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(223, 339)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ProjectileView/EnemyProjectile:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_eh6s7"]
+resource_name = "projectile_view"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProjectileView:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ProjectileView/Line2D:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.475928, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(223, 340, 403, 270), PackedVector2Array(223, 340, 435, 345), PackedVector2Array(223, 340, 435, 345)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ProjectileView/Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.475928, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(403, 270), Vector2(435, 345), Vector2(435, 345)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ProjectileView/Line2D:visible")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ProjectileView/Sprite2D:visible")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ProjectileView/EnemyProjectile:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.16667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ProjectileView/EnemyProjectile:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.600613, 1.16667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(223, 339), Vector2(435, 345)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ProjectileView/EnemyProjectile:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.6, 1.16625),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 8.37758]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a6atb"]
+_data = {
+&"RESET": SubResource("Animation_puber"),
+&"lasso_view": SubResource("Animation_5r8ea"),
+&"projectile_view": SubResource("Animation_eh6s7")
+}
+
+[node name="HowToPlay" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eh6s7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.568627)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jffjq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+text = "How To Play"
+label_settings = SubResource("LabelSettings_t8g4s")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PrevButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("1_71mj8")
+text = "Previous"
+
+[node name="NextButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_71mj8")
+text = "Next"
+
+[node name="StepExplanation" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Capture enemies in your lasso by clicking and dragging with the mouse to draw a loop around them."
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_x25no")
+stretch_mode = 1
+
+[node name="LassoView" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(25, 22)
+
+[node name="Line2D" type="Line2D" parent="LassoView"]
+texture_repeat = 2
+position = Vector2(324, 313)
+points = PackedVector2Array(0, 0, 14, -31, 46, -55, 77, -50, 97, -25, 102, 0, 98, 27, 86, 53, 59, 63, 21, 62, 13, 44, 4, 26, 6, 10)
+texture = ExtResource("5_a6atb")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Player" type="AnimatedSprite2D" parent="LassoView"]
+use_parent_material = true
+position = Vector2(194, 317)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vh2sv")
+
+[node name="Enemy" type="AnimatedSprite2D" parent="LassoView"]
+position = Vector2(382, 317)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
+[node name="ProjectileView" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Cactus" parent="ProjectileView" instance=ExtResource("6_w406u")]
+position = Vector2(434, 344)
+
+[node name="Line2D" type="Line2D" parent="ProjectileView"]
+texture_repeat = 2
+points = PackedVector2Array(223, 340, 403, 270)
+width = 4.0
+texture = ExtResource("7_neixi")
+texture_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="ProjectileView"]
+position = Vector2(403, 270)
+texture = SubResource("AtlasTexture_esxau")
+
+[node name="Player" type="AnimatedSprite2D" parent="ProjectileView"]
+use_parent_material = true
+position = Vector2(223, 339)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vh2sv")
+
+[node name="EnemyProjectile" type="Sprite2D" parent="ProjectileView"]
+visible = false
+position = Vector2(223, 339)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("10_eh6s7")
+
+[node name="GoldView" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Enemy" type="AnimatedSprite2D" parent="GoldView"]
+position = Vector2(451, 343)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
+[node name="Line2D" type="Line2D" parent="GoldView"]
+texture_repeat = 2
+points = PackedVector2Array(223, 340, 430, 330)
+width = 4.0
+texture = ExtResource("10_esxau")
+texture_mode = 1
+
+[node name="GoldCursor" type="AnimatedSprite2D" parent="GoldView"]
+position = Vector2(430, 330)
+sprite_frames = SubResource("SpriteFrames_6fuem")
+frame = 1
+frame_progress = 0.979504
+
+[node name="Player" type="AnimatedSprite2D" parent="GoldView"]
+use_parent_material = true
+position = Vector2(223, 339)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vh2sv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_a6atb")
+}
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 564.0
+offset_top = 35.0
+offset_right = 595.0
+offset_bottom = 66.0
+text = "X"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PrevButton" to="." method="to_prev_screen"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NextButton" to="." method="to_next_screen"]
+[connection signal="pressed" from="ExitButton" to="." method="close_menu"]
