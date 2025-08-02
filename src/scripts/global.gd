@@ -12,6 +12,13 @@ func _ready() -> void:
 	load_settings()
 	settings_updated()
 
+	var music := AudioStreamPlayer.new()
+	music.bus = &"Music"
+	music.stream = preload("res://assets/music/cowboy_v1.ogg")
+	music.volume_db = -10.0
+	add_child(music)
+	music.play()
+
 
 func load_settings() -> void:
 	if not FileAccess.file_exists(SETTINGS_FILE):
