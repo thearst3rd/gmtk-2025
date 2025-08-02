@@ -30,6 +30,8 @@ collision_mask = 14
 
 [node name="Projectiles" type="Node" parent="."]
 
+[node name="ScoreLabels" type="Node" parent="."]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_fpc82")]
@@ -55,7 +57,7 @@ offset_left = 12.0
 offset_top = 9.0
 offset_right = 64.0
 offset_bottom = 32.0
-text = "Score: "
+text = "Score: 0"
 label_settings = SubResource("LabelSettings_dwrxi")
 
 [node name="GoldenSound" type="AudioStreamPlayer" parent="."]

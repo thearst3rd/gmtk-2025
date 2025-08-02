@@ -42,6 +42,11 @@ func _ready() -> void:
 		collect_sounds.push_back(sound)
 		add_child(sound)
 
+	for object in $Objects.get_children() as Array[Node2D]:
+		if object.position.distance_squared_to(player.position) < 6400:
+			$Objects.remove_child(object)
+			object.queue_free()
+
 
 func _process(delta: float) -> void:
 	game_time += delta
@@ -112,7 +117,7 @@ func despawn_objects(chunk_start: Vector2) -> void:
 			object.queue_free()
 
 
-func on_line_complete(points: Array[Vector2], penalty: float) -> void:
+func on_line_complete(points: Array[Vector2], center: Vector2, penalty: float) -> void:
 	var enemies_captured := 0
 
 	for node in $Enemies.get_children():
@@ -128,11 +133,11 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 
 	if enemies_captured > 0:
 		if penalty < GOLDEN_THRESHOLD:
-			add_to_score(500 + 150 * enemies_captured * enemies_captured)
+			add_to_score(500 + 150 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = true
 			golden_sound.play()
 		else:
-			add_to_score(100 + 50 * enemies_captured * enemies_captured)
+			add_to_score(100 + 50 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = false
 		player.draw_controller.active = false
 
@@ -168,11 +173,11 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 				strike.finished.connect(strike.queue_free)
 				strike.play()
 		# Explode
-		add_to_score(2500)
+		add_to_score(2500, body.position)
 		$Enemies.remove_child(body)
 		body.queue_free()
 	else:
-		add_to_score(1000)
+		add_to_score(1000, body.position)
 
 
 func on_projectile_expire(location: Vector2) -> void:
@@ -181,8 +186,10 @@ func on_projectile_expire(location: Vector2) -> void:
 	$Enemies.add_child(new_enemy)
 
 
-func add_to_score(value: int) -> void:
+func add_to_score(value: int, label_position: Vector2) -> void:
 	score += value
+	var score_label := ScoreLabel.new_label(str(value), label_position)
+	$ScoreLabels.add_child(score_label)
 	%ScoreLabel.text = "Score: " + str(score)
 
 

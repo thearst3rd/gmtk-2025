@@ -2,7 +2,7 @@ class_name DrawController
 extends Node2D
 
 
-signal line_complete(points: Array[Vector2], penalty: float)
+signal line_complete(points: Array[Vector2], center: Vector2, penalty: float)
 
 
 @export var SHOW_DEBUG_COMPARISON := false
@@ -131,7 +131,7 @@ func _drawing_finished() -> void:
 	for idx in range(len(drawing_points)):
 		drawing_points[idx] = drawing_points[idx] + global_position
 	_drawing_succeeded(mean_center)
-	line_complete.emit(drawing_points, penalty)
+	line_complete.emit(drawing_points, mean_center + global_position, penalty)
 
 
 # Check if the last point added has crossed over the existing line.
