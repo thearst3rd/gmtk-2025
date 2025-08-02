@@ -14,6 +14,8 @@ var loaded_chunks: Array[Vector2] = []
 @onready var game_over: ColorRect = %GameOver
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
 
+var collect_sounds: Array[AudioStreamPlayer] = []
+
 
 func _ready() -> void:
 	player.draw_controller.line_complete.connect(on_line_complete)
@@ -29,6 +31,16 @@ func _ready() -> void:
 		for y in range(-1, 2):
 			var chunk_start = player_chunk_pos + Vector2(x, y) * CHUNK_SIZE
 			spawn_objects(chunk_start)
+
+	# Create a few "collection" sounds at varying pitches for use when collecting enemies
+	for i in range(5):
+		var sound := AudioStreamPlayer.new()
+		sound.bus = &"Sound"
+		sound.volume_db = -3.0
+		sound.stream = preload("res://assets/sfx/collect.wav")
+		sound.pitch_scale = 1.0 + float(i) / 3.0
+		collect_sounds.push_back(sound)
+		add_child(sound)
 
 
 func _process(delta: float) -> void:
@@ -123,6 +135,12 @@ func on_line_complete(points: Array[Vector2], penalty: float) -> void:
 			add_to_score(100 + 50 * enemies_captured * enemies_captured)
 			player.draw_controller.golden = false
 		player.draw_controller.active = false
+
+		for i in range(enemies_captured):
+			var sound := collect_sounds[mini(i, collect_sounds.size() - 1)]
+			sound.stop()
+			sound.play()
+			await get_tree().create_timer(0.15).timeout
 
 
 func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -> void:

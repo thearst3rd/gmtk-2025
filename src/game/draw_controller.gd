@@ -36,6 +36,7 @@ var current_length: float
 @onready var success_tween: Tween = null
 
 @onready var drawing_sound: AudioStreamPlayer = $DrawingSound
+@onready var miss_sound: AudioStreamPlayer = $MissSound
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -197,6 +198,7 @@ func _drawing_failed() -> void:
 	failed_line.points = line.points
 	fail_animation.stop()
 	fail_animation.play(&"failed")
+	miss_sound.play()
 
 
 func _drawing_succeeded(mean_point: Vector2) -> void:
