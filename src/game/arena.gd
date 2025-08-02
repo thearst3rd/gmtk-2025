@@ -9,8 +9,6 @@ var score: int = 0
 var loaded_chunks: Array[Vector2] = []
 var is_game_over := false
 
-@export var GOLDEN_THRESHOLD := 8.0
-
 @onready var player: Player = %Player
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
 @onready var how_to_play: Control = %HowToPlay
@@ -126,7 +124,7 @@ func despawn_objects(chunk_start: Vector2) -> void:
 			object.queue_free()
 
 
-func on_line_complete(points: Array[Vector2], center: Vector2, penalty: float) -> void:
+func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> void:
 	var enemies_captured := 0
 
 	for node in $Enemies.get_children():
@@ -141,7 +139,7 @@ func on_line_complete(points: Array[Vector2], center: Vector2, penalty: float) -
 			player.captured_enemy()
 
 	if enemies_captured > 0:
-		if penalty < GOLDEN_THRESHOLD:
+		if golden:
 			add_to_score(500 + 150 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = true
 			golden_sound.play()
