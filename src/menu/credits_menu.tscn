@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://4qucv6ngvo5l"]
+[gd_scene load_steps=4 format=3 uid="uid://4qucv6ngvo5l"]
 
 [ext_resource type="Script" uid="uid://b0pnwx1gh3rg2" path="res://src/menu/credits_menu.gd" id="1_o08hf"]
+[ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="2_nqgkk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o08hf"]
 content_margin_left = 0.0
@@ -41,8 +42,10 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/bold_font = ExtResource("2_nqgkk")
 bbcode_enabled = true
-text = "[center][font_size=48][b]Loop It Up, Cowboy![/b][/font_size]
+text = "[center][font_size=56
+][b]Loop It Up, Cowboy![/b][/font_size]
 
 [font_size=24]Created for GMTK Game Jam 2025[/font_size]
 

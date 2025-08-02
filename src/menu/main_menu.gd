@@ -3,7 +3,8 @@ extends Control
 
 @onready var quit_button: Button = %QuitButton
 @onready var main_buttons: VBoxContainer = %MainButtons
-@onready var settings_panel: PanelContainer = $SettingsPanel
+@onready var settings_panel: PanelContainer = %SettingsPanel
+@onready var title_and_buttons: VBoxContainer = %TitleAndButtons
 
 
 func _ready() -> void:
@@ -16,7 +17,7 @@ func _on_play_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	main_buttons.hide()
+	title_and_buttons.hide()
 	settings_panel.show()
 
 
@@ -29,5 +30,5 @@ func _on_quit_button_pressed() -> void:
 
 
 func _on_settings_back_button_pressed() -> void:
-	main_buttons.show()
+	title_and_buttons.show()
 	settings_panel.hide()

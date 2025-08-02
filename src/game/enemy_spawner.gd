@@ -1,6 +1,9 @@
 extends Node
 
 
+signal difficulty_up()
+
+
 @export var MIN_SPAWN_DISTANCE := 700.0
 @export var MAX_SPAWN_DISTANCE := 1200.0
 @export var DESPAWN_DISTANCE := 1800.0
@@ -37,6 +40,7 @@ func _process(_delta: float) -> void:
 		spawn_per_second = 0.25 + spawn_stage * spawn_stage * 0.5
 		min_enemies += 5
 		max_enemies += 20
+		difficulty_up.emit()
 
 	for enemy_node in enemies.get_children():
 		var enemy_pos: Vector2 = enemy_node.position
