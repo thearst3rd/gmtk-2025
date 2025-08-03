@@ -83,7 +83,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		shoot_sound.play()
 		captured_enemies -= 1
 		draw_controller.ammo = captured_enemies
-		# Call this to update the count befor the user moves the mouse.
+		# Call this to update the count before the user moves the mouse.
 		draw_controller._draw_crosshair()
 		if captured_enemies == 0:
 			draw_controller.active = true

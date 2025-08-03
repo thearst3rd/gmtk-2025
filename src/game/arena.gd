@@ -161,6 +161,7 @@ func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> 
 
 func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -> void:
 	if billiard <= 1:
+		# This is an actual click from the user, not a ricochet.
 		player.draw_controller.ammo -= 1
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.billiard_ball = billiard
