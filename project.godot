@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Loop It Up, Cowboy!"
+config/name="Loop 'Em Up, Cowboy!"
 run/main_scene="uid://bxxlmxhb5u7uo"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://cy73vk0l6eeak"

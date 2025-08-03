@@ -48,27 +48,89 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 110.0
 offset_bottom = 52.0
+theme_override_fonts/font = ExtResource("2_nqgkk")
 theme_override_font_sizes/font_size = 24
 text = "Back"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_top = -172.5
+offset_bottom = 172.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 theme_override_fonts/bold_font = ExtResource("2_nqgkk")
 bbcode_enabled = true
-text = "[center][font_size=56][b]Loop It Up, Cowboy![/b][/font_size]
+text = "[center][font_size=56][b]Loop 'Em Up, Cowboy![/b][/font_size]
 
-[font_size=24]Created for GMTK Game Jam 2025[/font_size]
+[font_size=24][b]Created for GMTK Game Jam 2025[/b][/font_size]
 
-[font_size=32]Terry Hearst
-Andrew Moore
-Kyle Reese[/font_size][/center]"
+[/center]"
 fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/line_separation = 0
+theme_override_fonts/bold_font = ExtResource("2_nqgkk")
+bbcode_enabled = true
+text = "[center][font_size=24][b]Design[/b][/font_size][/center][font_size=6]
+
+[/font_size][font_size=16][b]Terry Hearst 
+Andrew Moore
+Kyle Reese[/b][/font_size]
+
+[center][font_size=24][b]Music[/b][/font_size][/center][font_size=6]
+
+[/font_size][font_size=16][b]Andrew Moore[/b][/font_size]"
+fit_content = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/bold_font = ExtResource("2_nqgkk")
+bbcode_enabled = true
+text = "[center][font_size=24][b]Programing[/b][/font_size][/center][font_size=6]
+
+[/font_size][font_size=16][b]Terry Hearst
+Andrew Moore
+Kyle Reese[/b][/font_size]
+
+[center][font_size=24][b]Sounds[/b][/font_size][/center][font_size=6]
+
+[/font_size][font_size=16][b]Terry Hearst[/b][/font_size]"
+fit_content = true
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="LicensesButton" type="Button" parent="."]
 unique_name_in_owner = true
@@ -85,6 +147,7 @@ offset_right = -10.0
 offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_nqgkk")
 text = "View All Licenses"
 
 [node name="LicensesPanel" type="PanelContainer" parent="."]
