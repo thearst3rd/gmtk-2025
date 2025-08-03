@@ -2,6 +2,7 @@ extends Control
 
 
 @onready var play_button: Button = %PlayButton
+@onready var how_to_play_button: Button = %HowToPlayButton
 @onready var settings_button: Button = %SettingsButton
 @onready var quit_button: Button = %QuitButton
 @onready var main_buttons: VBoxContainer = %MainButtons
@@ -44,3 +45,10 @@ func _on_settings_back_button_pressed() -> void:
 func _on_how_to_play_button_pressed() -> void:
 	how_to_play.show()
 	how_to_play.load_screen()
+	how_to_play.focus()
+	title_and_buttons.hide()
+
+
+func _on_how_to_play_exited() -> void:
+	title_and_buttons.show()
+	how_to_play_button.grab_focus()
