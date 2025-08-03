@@ -4,6 +4,8 @@ extends Node2D
 const CHUNK_SIZE = 1000
 
 
+@export var PLAYER_PROTECTION_BUBBLE_SIZE := 100
+
 var game_time: float = 0
 var score: int = 0
 var loaded_chunks: Array[Vector2] = []
@@ -14,6 +16,7 @@ var is_game_over := false
 @onready var how_to_play: Control = %HowToPlay
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var game_over: ColorRect = %GameOver
+@onready var enemies: Node = $Enemies
 
 var collect_sounds: Array[AudioStreamPlayer] = []
 
@@ -227,3 +230,11 @@ func on_how_to_play_exited() -> void:
 	get_tree().paused = false
 	$UI.show()
 	pause_menu.pausable = true
+
+
+func _on_player_player_hit(_current_health: int) -> void:
+	for enemy_node in enemies.get_children():
+		if enemy_node.position.distance_squared_to(player.position) <= PLAYER_PROTECTION_BUBBLE_SIZE * PLAYER_PROTECTION_BUBBLE_SIZE:
+			create_explosion(enemy_node.position)
+			enemies.remove_child(enemy_node)
+			enemy_node.queue_free()

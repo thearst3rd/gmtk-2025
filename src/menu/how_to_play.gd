@@ -69,6 +69,10 @@ func load_screen() -> void:
 		next_button.disabled = true
 
 
+func focus() -> void:
+	next_button.grab_focus()
+
+
 func close_menu() -> void:
 	hide()
 	$AnimationPlayer.stop()
