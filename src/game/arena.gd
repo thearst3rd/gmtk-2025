@@ -247,6 +247,7 @@ func update_current_chain() -> void:
 		return
 	else:
 		%ChainLabel.text = "Chain: " + str(current_chain)
+	$ChainFadeAnimation.stop()
 	$ChainFadeAnimation.play("chain_fade")
 
 
