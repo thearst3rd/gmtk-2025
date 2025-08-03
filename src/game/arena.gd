@@ -19,6 +19,7 @@ var is_game_over := false
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var game_over: ColorRect = %GameOver
 @onready var enemies: Node = $Enemies
+@onready var projectiles: Node2D = $Projectiles
 
 
 var collect_sounds: Array[AudioStreamPlayer] = []
@@ -245,8 +246,10 @@ func update_current_chain() -> void:
 
 func _on_player_player_died() -> void:
 	is_game_over = true
-	game_over.reveal(score, max_chain)
 	pause_menu.pausable = false
+	while projectiles.get_child_count() > 0:
+		await get_tree().create_timer(0.1).timeout
+	game_over.reveal(score, max_chain)
 
 
 func on_how_to_play_button_pressed() -> void:
