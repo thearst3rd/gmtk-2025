@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bqw737m45kyq4"]
+[gd_scene load_steps=42 format=3 uid="uid://bqw737m45kyq4"]
 
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="1_71mj8"]
 [ext_resource type="Script" uid="uid://vlnlq72dmsma" path="res://src/menu/how_to_play.gd" id="1_eh6s7"]
@@ -11,6 +11,30 @@
 [ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="10_eh6s7"]
 [ext_resource type="Texture2D" uid="uid://b2wgf04ag0man" path="res://assets/crosshair_line_gold.png" id="10_esxau"]
 [ext_resource type="Texture2D" uid="uid://le4hu0xihpxw" path="res://assets/bad_guy.png" id="11_vh2sv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh6s7"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.74902)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="Theme" id="Theme_vh2sv"]
+Button/styles/focus = SubResource("StyleBoxFlat_eh6s7")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jffjq"]
 bg_color = Color(0.95041, 0.891967, 0.826512, 1)
@@ -29,6 +53,10 @@ font = ExtResource("1_71mj8")
 font_size = 40
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eh6s7"]
+line_spacing = 0.0
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nkm2x"]
 atlas = ExtResource("6_eh6s7")
@@ -323,6 +351,94 @@ tracks/10/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("DifficultyView/Player:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(249, 329)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("DifficultyView:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_vh2sv"]
+resource_name = "difficulty_view"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DifficultyView:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DifficultyView/Player:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5, 2.25, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(249, 329), Vector2(375, 329), Vector2(375, 329), Vector2(249, 329), Vector2(249, 329)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("DifficultyView/Player:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5, 2.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"walk", &"default", &"walk", &"default"]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DifficultyView/Player")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5, 2.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [&"walk", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"default", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"walk", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"default", 1.0, false],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_5r8ea"]
 resource_name = "lasso_view"
@@ -469,6 +585,7 @@ tracks/7/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a6atb"]
 _data = {
 &"RESET": SubResource("Animation_puber"),
+&"difficulty_view": SubResource("Animation_vh2sv"),
 &"lasso_view": SubResource("Animation_5r8ea"),
 &"projectile_view": SubResource("Animation_eh6s7")
 }
@@ -481,6 +598,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_vh2sv")
 script = ExtResource("1_eh6s7")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -546,14 +664,9 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("1_71mj8")
 text = "Next"
 
-[node name="StepExplanation" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(440, 0)
+[node name="Spacer" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Capture enemies in your lasso by clicking and dragging with the mouse to draw a loop around them."
-autowrap_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 200)
@@ -561,6 +674,21 @@ layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("2_x25no")
 stretch_mode = 1
+
+[node name="StepExplanation" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 149.0
+offset_right = 540.0
+offset_bottom = 229.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Capture enemies in your lasso by clicking and dragging with the mouse to draw a loop around them. The loop has to be closed and fully contain the enemy."
+label_settings = SubResource("LabelSettings_eh6s7")
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="LassoView" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -577,7 +705,7 @@ end_cap_mode = 2
 
 [node name="Player" type="AnimatedSprite2D" parent="LassoView"]
 use_parent_material = true
-position = Vector2(194, 317)
+position = Vector2(198, 317)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_vh2sv")
 
@@ -620,6 +748,7 @@ texture = ExtResource("10_eh6s7")
 
 [node name="GoldView" type="Node2D" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="Enemy" type="AnimatedSprite2D" parent="GoldView"]
 position = Vector2(451, 343)
@@ -646,18 +775,54 @@ position = Vector2(223, 339)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_vh2sv")
 
+[node name="DifficultyView" type="Node2D" parent="."]
+
+[node name="Player" type="AnimatedSprite2D" parent="DifficultyView"]
+process_mode = 3
+use_parent_material = true
+position = Vector2(249, 329)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vh2sv")
+frame_progress = 0.826036
+
+[node name="Enemy" type="AnimatedSprite2D" parent="DifficultyView"]
+position = Vector2(449, 303)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
+[node name="Enemy2" type="AnimatedSprite2D" parent="DifficultyView"]
+position = Vector2(466, 353)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
+[node name="Enemy3" type="AnimatedSprite2D" parent="DifficultyView"]
+position = Vector2(194, 378)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
+[node name="Enemy4" type="AnimatedSprite2D" parent="DifficultyView"]
+position = Vector2(156, 288)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vbk2n")
+animation = &"walk"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_a6atb")
 }
 
 [node name="ExitButton" type="Button" parent="."]
+custom_minimum_size = Vector2(75, 0)
 layout_mode = 0
-offset_left = 564.0
-offset_top = 35.0
-offset_right = 595.0
-offset_bottom = 66.0
-text = "X"
+offset_left = 525.0
+offset_top = 46.0
+offset_right = 600.0
+offset_bottom = 77.0
+theme_override_fonts/font = ExtResource("1_71mj8")
+text = "Back"
 
 [connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PrevButton" to="." method="to_prev_screen"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NextButton" to="." method="to_next_screen"]
