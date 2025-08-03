@@ -6,9 +6,9 @@ signal exited()
 
 const TEXT = [
 	"Capture enemies in your lasso by clicking and dragging with the mouse to draw a loop around them. The loop has to be closed and fully contain the enemy.",
-	"When you have an enemy captured, aim at a cactus, rock or other enemy and click to shoot. You can capture multiple enemies in the same loop.",
+	"When you have an enemy captured, aim at a cactus, rock, or other enemy, and click to shoot. You can capture multiple enemies in the same loop.",
 	"If the loop you drew is close to a perfect circle, your cursor will turn gold, and projectiles you throw will cause a chain reaction!",
-	"The longer you're alive, the more difficult it gets and enemy spawns will increase. Try to get as many points as you can!",
+	"The longer you're alive, the more difficult it will get, and the faster that enemies will spawn. Try to get as many points as you can!",
 ]
 
 const MAX_SCREENS = 4
