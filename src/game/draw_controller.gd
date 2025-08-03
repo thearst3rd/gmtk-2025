@@ -119,7 +119,7 @@ func _drawing_finished() -> void:
 		line.hide()
 
 	if drawing_points.size() < 3:
-		print("Not enough points")
+		# print("Not enough points")
 		_drawing_failed()
 		return
 
@@ -132,7 +132,7 @@ func _drawing_finished() -> void:
 
 	var is_closed := _check_if_closed(drawing_points)
 
-	print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
+	# print("Penalty: %f, Closed: %s" % [penalty, "true" if is_closed else "false"])
 
 	if SHOW_DEBUG_COMPARISON:
 		comparison_line.clear_points()
