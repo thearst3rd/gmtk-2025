@@ -17,13 +17,18 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	# Set direction to vector at the player
 	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
-	if not player or player.dead:
+	if not player:
 		animated_sprite.play(&"default")
 		return
 
 	var player_position := player.global_position
-	var direction := (player_position - position).normalized()
-	velocity = direction * SPEED
+	var direction: Vector2
+	if player.dead:
+		direction = (position - player_position).normalized()
+		velocity = direction * SPEED / 2
+	else:
+		direction = (player_position - position).normalized()
+		velocity = direction * SPEED
 	move_and_slide()
 
 

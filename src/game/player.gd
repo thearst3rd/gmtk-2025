@@ -75,7 +75,7 @@ func player_damaged() -> void:
 		animated_sprite.play(&"default")
 		animation_player.play(&"dead")
 		draw_controller.cancel_drawing()
-		collision_shape.disabled = true
+		collision_shape.set_deferred("disabled", true)
 		draw_controller.active = false
 		draw_controller.hide_crosshair()
 	else:
