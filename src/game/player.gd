@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 
+signal started_moving()
 signal player_died()
 signal player_hit(current_health: int)
 signal shoot(location: Vector2, direction: Vector2, billiard: int)
@@ -14,6 +15,7 @@ var remaining_health := 3
 var captured_enemies := 0
 var vulnerable := true
 var dead := false
+var has_moved := false
 
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 @onready var draw_controller: DrawController = $DrawController
@@ -36,9 +38,13 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	var direction := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+
 	velocity = direction * SPEED
 
 	if direction != Vector2.ZERO:
+		if not has_moved:
+			started_moving.emit()
+			has_moved = true
 		animated_sprite.play(&"walk")
 	else:
 		animated_sprite.play(&"default")

@@ -9,6 +9,7 @@ const CHUNK_SIZE = 1000
 var game_time: float = 0
 var score: int = 0
 var max_chain: int = 0
+var current_chain: int = 0
 var loaded_chunks: Array[Vector2] = []
 var is_game_over := false
 
@@ -26,7 +27,7 @@ var collect_sounds: Array[AudioStreamPlayer] = []
 func _ready() -> void:
 	%DifficultyLabel.hide()
 	player.draw_controller.line_complete.connect(on_line_complete)
-	$EnemySpawner.difficulty_up.connect($AnimationPlayer.play.bind("difficulty_up"))
+	$EnemySpawner.difficulty_up.connect($DifficultyUpAnimation.play.bind("difficulty_up"))
 	score = 0
 	is_game_over = false
 
@@ -168,6 +169,8 @@ func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -
 	if billiard <= 1:
 		# This is an actual click from the user, not a ricochet.
 		player.draw_controller.ammo -= 1
+		current_chain = 0
+		update_current_chain()
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.billiard_ball = billiard
 	new_projectile.init(location, direction)
@@ -178,16 +181,15 @@ func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -
 
 func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: int) -> void:
 	if body is Enemy:
-		if max_chain == 0:
-			max_chain = 1
+		if current_chain == 0:
+			current_chain = 1
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
 			var next_billiard := billiard_ball + 1
-			if next_billiard > max_chain:
-				max_chain = next_billiard
+			if next_billiard - 1 > current_chain:
+				current_chain = next_billiard - 1
 			on_player_shoot(body.position, new_direction, next_billiard)
 			if billiard_ball == 2:
-				print("Strike!!!")
 				var strike := AudioStreamPlayer2D.new()
 				strike.bus = &"Sound"
 				strike.volume_db = 4.0
@@ -196,7 +198,7 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 				add_child(strike)
 				strike.finished.connect(strike.queue_free)
 				strike.play()
-			add_to_score(billiard_ball * 1000, projectile_position)
+			add_to_score(billiard_ball * 1000, projectile_position, billiard_ball)
 		else:
 			add_to_score(1000, body.position)
 		create_explosion(projectile_position)
@@ -205,6 +207,10 @@ func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball
 	else:
 		add_to_score(500 + billiard_ball * 1000, projectile_position)
 		create_explosion(projectile_position)
+
+	update_current_chain()
+	if current_chain > max_chain:
+		max_chain = current_chain
 
 
 func create_explosion(location: Vector2) -> void:
@@ -219,11 +225,22 @@ func on_projectile_expire(location: Vector2) -> void:
 	$Enemies.add_child(new_enemy)
 
 
-func add_to_score(value: int, label_position: Vector2) -> void:
+func add_to_score(value: int, label_position: Vector2, chain: int = 0) -> void:
 	score += value
-	var score_label := ScoreLabel.new_label(str(value), label_position)
+	var score_text := str(value)
+	if chain >= 2:
+		score_text += "\nCHAIN %d" % chain
+	var score_label := ScoreLabel.new_label(score_text, label_position)
 	$ScoreLabels.add_child(score_label)
 	%ScoreLabel.text = "Score: " + str(score)
+
+
+func update_current_chain() -> void:
+	if current_chain < 2:
+		%ChainLabel.text = ""
+	else:
+		%ChainLabel.text = "Chain: " + str(current_chain)
+	$ChainFadeAnimation.play("chain_fade")
 
 
 func _on_player_player_died() -> void:
@@ -252,3 +269,12 @@ func _on_player_player_hit(_current_health: int) -> void:
 			create_explosion(enemy_node.position)
 			enemies.remove_child(enemy_node)
 			enemy_node.queue_free()
+
+
+func show_wasd() -> void:
+	%WASDLabel.show()
+
+
+func player_started_moving() -> void:
+	%WASDTimer.stop()
+	get_tree().create_timer(1.5).timeout.connect(%WASDLabel.hide)
