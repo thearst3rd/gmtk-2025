@@ -6,6 +6,8 @@ const SETTINGS_FILE := "user://settings.json"
 var sound_volume := 0.5
 var music_volume := 0.5
 
+var high_score := 0
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -35,6 +37,8 @@ func load_settings() -> void:
 		music_volume = clampf(json["music_volume"], 0.0, 1.0)
 	if json.get("fullscreen", false) == true:
 		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
+	if typeof(json.get("high_score", null)) in [TYPE_FLOAT, TYPE_INT]:
+		high_score = json["high_score"]
 
 
 func save_settings() -> void:
@@ -42,6 +46,7 @@ func save_settings() -> void:
 		"sound_volume": sound_volume,
 		"music_volume": music_volume,
 		"fullscreen": get_window().mode in [Window.MODE_EXCLUSIVE_FULLSCREEN, Window.MODE_FULLSCREEN],
+		"high_score": high_score,
 	}
 	var f := FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	if not f:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c14gxuhmro3d5"]
+[gd_scene load_steps=8 format=3 uid="uid://c14gxuhmro3d5"]
 
 [ext_resource type="Script" uid="uid://bdcprmc30kaw6" path="res://src/menu/game_over.gd" id="1_m6r40"]
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="2_u6166"]
@@ -8,6 +8,11 @@ font = ExtResource("2_u6166")
 font_size = 72
 font_color = Color(0.999998, 0.468621, 0.479272, 1)
 outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6166"]
+font = ExtResource("2_u6166")
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_o2c2l"]
@@ -121,17 +126,15 @@ OVER"
 label_settings = SubResource("LabelSettings_o2c2l")
 horizontal_alignment = 1
 
-[node name="ScoreText" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+[node name="ScoreText" type="Label" parent="CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(480, 80)
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_u6166")
 text = "Final Score: 0
-Highest Chain: 0
+Longest Chain: 0
 
 New High Score! Previous: 0"
+label_settings = SubResource("LabelSettings_u6166")
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
