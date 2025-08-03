@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cciem2led2btp" path="res://src/game/enemy_projectile.gd" id="1_0piwa"]
 [ext_resource type="Texture2D" uid="uid://cbtsnbjl170gv" path="res://assets/bad_guy_porojectile.png" id="2_0piwa"]
-[ext_resource type="AudioStream" uid="uid://bipwvwc6iypfl" path="res://assets/sfx/hurt.wav" id="3_ykfnh"]
+[ext_resource type="AudioStream" uid="uid://booc7tokj0emy" path="res://assets/sfx/hit1.wav" id="3_ykfnh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ykfnh"]
 radius = 19.0
@@ -120,6 +120,9 @@ libraries = {
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_ykfnh")
+max_distance = 1000.0
+panning_strength = 2.0
+bus = &"Sound"
 
 [connection signal="area_entered" from="." to="." method="on_body_entered"]
 [connection signal="body_entered" from="." to="." method="on_body_entered"]

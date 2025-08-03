@@ -22,6 +22,7 @@ const PENALTY_GOLD_THRESHOLD := 8.0
 const AMMO_TEXT_OFFSET := Vector2.UP * 15
 
 var active := true
+var crosshair := false
 var golden := false
 var drawing := false
 var drawing_points: Array[Vector2]
@@ -47,15 +48,12 @@ var ammo := 0
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not active:
+	if crosshair:
 		if event is InputEventMouseMotion:
 			_draw_crosshair()
 			get_viewport().set_input_as_handled()
+	if not active:
 		return
-	else:
-		$Crosshair.hide()
-		$CrosshairLine.hide()
-		$AmmoCount.hide()
 	if drawing:
 		if event is InputEventMouseMotion:
 			_drawing_moved()
@@ -75,6 +73,13 @@ func cancel_drawing() -> void:
 	drawing = false
 	_drawing_failed()
 	drawing_sound.volume_db = -80.0
+
+
+func hide_crosshair() -> void:
+	crosshair = false
+	$Crosshair.hide()
+	$CrosshairLine.hide()
+	$AmmoCount.hide()
 
 
 func _drawing_started() -> void:

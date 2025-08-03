@@ -17,7 +17,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	# Set direction to vector at the player
 	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
-	if not player:
+	if not player or player.dead:
 		animated_sprite.play(&"default")
 		return
 

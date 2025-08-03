@@ -145,7 +145,6 @@ visible = false
 
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_ewcyu")]
 unique_name_in_owner = true
-visible = false
 
 [node name="HowToPlay" parent="CanvasLayer" instance=ExtResource("6_fulqo")]
 unique_name_in_owner = true
