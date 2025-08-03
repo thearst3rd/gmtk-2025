@@ -70,6 +70,8 @@ func player_damaged() -> void:
 		animation_player.play(&"dead")
 		draw_controller.cancel_drawing()
 		collision_shape.disabled = true
+		draw_controller.active = false
+		draw_controller.hide_crosshair()
 	else:
 		hurt_sound.play()
 		vulnerable = false
@@ -81,7 +83,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if captured_enemies == 0:
 		return
 
-	if event.is_action_pressed(&"shoot"):
+	if event.is_action_pressed(&"shoot") and not dead:
 		var direction := get_local_mouse_position().normalized()
 		shoot.emit(position, direction, 1 if draw_controller.golden else 0)
 		shoot_sound.play()
@@ -91,6 +93,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		draw_controller._draw_crosshair()
 		if captured_enemies == 0:
 			draw_controller.active = true
+			draw_controller.hide_crosshair()
 		get_viewport().set_input_as_handled()
 
 

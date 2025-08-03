@@ -3,12 +3,13 @@ extends ColorRect
 
 @onready var score_text: RichTextLabel = %ScoreText
 @onready var restart_button: Button = %RestartButton
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func reveal(final_score) -> void:
-	show()
 	score_text.text = "Final score: " + str(final_score)
 	restart_button.grab_focus()
+	animation_player.play(&"enter")
 
 
 func _on_restart_button_pressed() -> void:

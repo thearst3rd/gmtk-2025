@@ -151,7 +151,9 @@ func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> 
 			add_to_score(100 + 50 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = false
 		player.draw_controller.active = false
+		player.draw_controller.crosshair = true
 		player.draw_controller.ammo = enemies_captured
+
 		for i in range(enemies_captured):
 			var sound := collect_sounds[mini(i, collect_sounds.size() - 1)]
 			sound.stop()
