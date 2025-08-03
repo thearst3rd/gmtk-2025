@@ -6,8 +6,9 @@ extends ColorRect
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
-func reveal(final_score) -> void:
-	score_text.text = "Final score: " + str(final_score)
+func reveal(final_score: int, max_chain: int) -> void:
+	score_text.text = "Final score: %d\nHighest chain: %d" % [final_score, max_chain]
+
 	restart_button.grab_focus()
 	animation_player.play(&"enter")
 

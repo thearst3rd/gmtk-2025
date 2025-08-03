@@ -8,6 +8,7 @@ const CHUNK_SIZE = 1000
 
 var game_time: float = 0
 var score: int = 0
+var max_chain: int = 0
 var loaded_chunks: Array[Vector2] = []
 var is_game_over := false
 
@@ -54,6 +55,8 @@ func _ready() -> void:
 		if object.position.distance_squared_to(player.position) < 6400:
 			$Objects.remove_child(object)
 			object.queue_free()
+
+	game_over.hide()
 
 
 func _process(delta: float) -> void:
@@ -175,9 +178,14 @@ func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -
 
 func on_projectile_hit(body: Node2D, projectile_position: Vector2, billiard_ball: int) -> void:
 	if body is Enemy:
+		if max_chain == 0:
+			max_chain = 1
 		if billiard_ball:
 			var new_direction := (body.position - projectile_position).normalized()
-			on_player_shoot(body.position, new_direction, billiard_ball + 1)
+			var next_billiard := billiard_ball + 1
+			if next_billiard > max_chain:
+				max_chain = next_billiard
+			on_player_shoot(body.position, new_direction, next_billiard)
 			if billiard_ball == 2:
 				print("Strike!!!")
 				var strike := AudioStreamPlayer2D.new()
@@ -220,7 +228,7 @@ func add_to_score(value: int, label_position: Vector2) -> void:
 
 func _on_player_player_died() -> void:
 	is_game_over = true
-	game_over.reveal(score)
+	game_over.reveal(score, max_chain)
 	pause_menu.pausable = false
 
 
