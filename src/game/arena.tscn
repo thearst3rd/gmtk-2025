@@ -30,22 +30,6 @@ font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_bpitu"]
-resource_name = "hurt"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0.38, 0.38, 0.482353), Color(1, 0.38, 0.38, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_i3w2m"]
 length = 0.001
 tracks/0/type = "value"
@@ -74,6 +58,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 0.38, 0.38, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bpitu"]
+resource_name = "hurt"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.38, 0.38, 0.482353), Color(1, 0.38, 0.38, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pxicn"]
@@ -191,6 +191,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(1, 0.38, 0.38, 0.482353)
 
 [node name="HowToPlayButton" type="Button" parent="UI"]

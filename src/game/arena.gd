@@ -239,7 +239,7 @@ func add_to_score(value: int, label_position: Vector2, chain: int = 0) -> void:
 
 func update_current_chain() -> void:
 	if current_chain < 2:
-		%ChainLabel.text = ""
+		return
 	else:
 		%ChainLabel.text = "Chain: " + str(current_chain)
 	$ChainFadeAnimation.play("chain_fade")
