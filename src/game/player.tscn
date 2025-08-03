@@ -16,10 +16,6 @@ shader = ExtResource("1_nkm2x")
 shader_parameter/desaturation_amount = 0.0
 shader_parameter/opacity = 1.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fagre"]
-radius = 15.0
-height = 74.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_nkm2x"]
 atlas = ExtResource("2_7dijx")
 region = Rect2(0, 0, 32, 48)
@@ -68,9 +64,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fagre"]
+radius = 15.0
+height = 58.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkm2x"]
 radius = 15.0
-height = 74.0
+height = 58.0
 
 [sub_resource type="Animation" id="Animation_m2sim"]
 length = 0.001
@@ -279,8 +279,14 @@ material = SubResource("ShaderMaterial_m2sim")
 collision_mask = 15
 script = ExtResource("1_7dijx")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+position = Vector2(1, 6)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_lwbkh")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+position = Vector2(0, 18)
 shape = SubResource("CapsuleShape2D_fagre")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -288,19 +294,14 @@ shape = SubResource("CapsuleShape2D_fagre")
 [node name="DrawController" parent="." instance=ExtResource("3_fagre")]
 MAXIMUM_LINE_DISTANCE = 600.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-use_parent_material = true
-position = Vector2(1, 6)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_lwbkh")
-
 [node name="Hurtbox" type="Area2D" parent="."]
 unique_name_in_owner = true
-visible = false
 collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+y_sort_enabled = true
+position = Vector2(0, 18)
 shape = SubResource("CapsuleShape2D_nkm2x")
 
 [node name="IFrames" type="Timer" parent="."]

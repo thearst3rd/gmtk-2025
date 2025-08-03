@@ -19,12 +19,14 @@ signal line_complete(points: Array[Vector2], center: Vector2, golden: bool)
 # Penalty threshold - higher than this value and it doesn't count as a circle
 const PENALTY_THRESHOLD := 25.0
 const PENALTY_GOLD_THRESHOLD := 8.0
+const AMMO_TEXT_OFFSET := Vector2.UP * 15
 
 var active := true
 var golden := false
 var drawing := false
 var drawing_points: Array[Vector2]
 var current_length: float
+var ammo := 0
 
 @onready var line: Line2D = $Line2D
 @onready var comparison_line: Line2D = $ComparisonLine
@@ -41,6 +43,8 @@ var current_length: float
 @onready var drawing_sound: AudioStreamPlayer = $DrawingSound
 @onready var miss_sound: AudioStreamPlayer = $MissSound
 
+@onready var ammo_count_label: Label = %AmmoCountLabel
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active:
@@ -51,6 +55,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		$Crosshair.hide()
 		$CrosshairLine.hide()
+		$AmmoCount.hide()
 	if drawing:
 		if event is InputEventMouseMotion:
 			_drawing_moved()
@@ -244,5 +249,11 @@ func _draw_crosshair() -> void:
 		$CrosshairLine.texture = preload("res://assets/crosshair_line_normal.png")
 	$Crosshair.position = mouse_pos
 	$Crosshair.show()
+	if ammo > 1:
+		$AmmoCount.position = mouse_pos + AMMO_TEXT_OFFSET
+		ammo_count_label.text = str(ammo)
+		$AmmoCount.show()
+	else:
+		$AmmoCount.hide()
 	$CrosshairLine.set_point_position(1, mouse_pos)
 	$CrosshairLine.show()
