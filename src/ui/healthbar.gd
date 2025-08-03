@@ -2,7 +2,7 @@ extends HBoxContainer
 
 
 func _on_player_player_hit(current_health: int) -> void:
-	while get_child_count() > current_health:
+	while get_child_count() > current_health and get_child_count() > 0:
 		var child: TextureRect = get_child(0)
 		_spawn_hat_fragments(position + child.position + child.size / 2.0)
 		remove_child(child)
