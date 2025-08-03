@@ -41,5 +41,6 @@ func on_body_entered(body: Node2D) -> void:
 	object_hit.emit(body, position, billiard_ball)
 	if billiard_ball != 2:
 		hit.play()
+		hit.finished.connect(hit.queue_free)
 		hit.reparent(get_parent())
 	queue_free()
