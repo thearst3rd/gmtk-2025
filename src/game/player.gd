@@ -82,6 +82,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		shoot.emit(position, direction, 1 if draw_controller.golden else 0)
 		shoot_sound.play()
 		captured_enemies -= 1
+		draw_controller.ammo = captured_enemies
+		# Call this to update the count before the user moves the mouse.
+		draw_controller._draw_crosshair()
 		if captured_enemies == 0:
 			draw_controller.active = true
 		get_viewport().set_input_as_handled()

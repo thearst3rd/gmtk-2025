@@ -3,13 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://dtdxgcuggb37h" path="res://assets/cactus.png" id="1_we2vn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_we2vn"]
-size = Vector2(14, 73)
+size = Vector2(14, 59)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_326do"]
 size = Vector2(18, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ho7a0"]
-size = Vector2(18, 25)
+size = Vector2(18, 20)
 
 [node name="Cactus" type="Area2D" groups=["HurtsPlayer"]]
 collision_layer = 4
@@ -20,7 +20,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_we2vn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.5)
+position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_we2vn")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
@@ -28,7 +28,8 @@ position = Vector2(16, 1.5)
 shape = SubResource("RectangleShape2D_326do")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-position = Vector2(-16, -13.5)
+y_sort_enabled = true
+position = Vector2(-16, -11)
 shape = SubResource("RectangleShape2D_ho7a0")
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]

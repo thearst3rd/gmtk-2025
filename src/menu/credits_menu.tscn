@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://4qucv6ngvo5l"]
+[gd_scene load_steps=5 format=3 uid="uid://4qucv6ngvo5l"]
 
 [ext_resource type="Script" uid="uid://b0pnwx1gh3rg2" path="res://src/menu/credits_menu.gd" id="1_o08hf"]
+[ext_resource type="Texture2D" uid="uid://d3f2prlu6ymf5" path="res://assets/title_screen.png" id="2_ijrkx"]
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="2_nqgkk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o08hf"]
@@ -23,6 +24,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o08hf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_ijrkx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.545098)
 
 [node name="BackButton" type="Button" parent="."]
 unique_name_in_owner = true

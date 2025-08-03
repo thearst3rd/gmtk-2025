@@ -18,6 +18,7 @@ var is_game_over := false
 @onready var game_over: ColorRect = %GameOver
 @onready var enemies: Node = $Enemies
 
+
 var collect_sounds: Array[AudioStreamPlayer] = []
 
 
@@ -150,7 +151,7 @@ func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> 
 			add_to_score(100 + 50 * enemies_captured * enemies_captured, center)
 			player.draw_controller.golden = false
 		player.draw_controller.active = false
-
+		player.draw_controller.ammo = enemies_captured
 		for i in range(enemies_captured):
 			var sound := collect_sounds[mini(i, collect_sounds.size() - 1)]
 			sound.stop()
@@ -159,6 +160,9 @@ func on_line_complete(points: Array[Vector2], center: Vector2, golden: bool) -> 
 
 
 func on_player_shoot(location: Vector2, direction: Vector2, billiard: int = 0) -> void:
+	if billiard <= 1:
+		# This is an actual click from the user, not a ricochet.
+		player.draw_controller.ammo -= 1
 	var new_projectile := preload("res://src/game/enemy_projectile.tscn").instantiate()
 	new_projectile.billiard_ball = billiard
 	new_projectile.init(location, direction)
