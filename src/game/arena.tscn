@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b0rybmr68nlu2"]
+[gd_scene load_steps=24 format=3 uid="uid://b0rybmr68nlu2"]
 
 [ext_resource type="Script" uid="uid://cquq3y345hu4n" path="res://src/game/arena.gd" id="1_0pbf2"]
 [ext_resource type="PackedScene" uid="uid://dwowpahlj38c2" path="res://src/game/infinite_background.tscn" id="1_44jrx"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c14gxuhmro3d5" path="res://src/menu/game_over.tscn" id="5_ewcyu"]
 [ext_resource type="AudioStream" uid="uid://d3uxosxqoiwmg" path="res://assets/sfx/golden.wav" id="6_dwrxi"]
 [ext_resource type="PackedScene" uid="uid://bqw737m45kyq4" path="res://src/menu/how_to_play.tscn" id="6_fulqo"]
+[ext_resource type="AudioStream" uid="uid://boi6vu0ffvawx" path="res://assets/sfx/difficultyUp.wav" id="8_1a4ih"]
 [ext_resource type="FontFile" uid="uid://djodagq044sqa" path="res://assets/fonts/nandaka-western.regular.ttf" id="8_evlm7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwrxi"]
@@ -267,6 +268,11 @@ stream = ExtResource("6_dwrxi")
 volume_db = -5.0
 bus = &"Sound"
 
+[node name="DifficultyUpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_1a4ih")
+volume_db = -6.0
+bus = &"Sound"
+
 [node name="DifficultyUpAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_1a4ih")
@@ -302,6 +308,7 @@ libraries = {
 [connection signal="player_hit" from="Player" to="UI/Healthbar" method="_on_player_player_hit"]
 [connection signal="shoot" from="Player" to="." method="on_player_shoot"]
 [connection signal="started_moving" from="Player" to="." method="player_started_moving"]
+[connection signal="difficulty_up" from="EnemySpawner" to="." method="on_difficulty_up"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnTimer" to="EnemySpawner" method="_on_enemy_spawn_timer_timeout"]
 [connection signal="pressed" from="UI/HowToPlayButton" to="." method="on_how_to_play_button_pressed"]
 [connection signal="exited" from="CanvasLayer/HowToPlay" to="." method="on_how_to_play_exited"]

@@ -15,6 +15,7 @@ var is_game_over := false
 
 @onready var player: Player = %Player
 @onready var golden_sound: AudioStreamPlayer = $GoldenSound
+@onready var difficulty_up_sound: AudioStreamPlayer = $DifficultyUpSound
 @onready var how_to_play: Control = %HowToPlay
 @onready var pause_menu: ColorRect = %PauseMenu
 @onready var game_over: ColorRect = %GameOver
@@ -28,7 +29,6 @@ var collect_sounds: Array[AudioStreamPlayer] = []
 func _ready() -> void:
 	%DifficultyLabel.hide()
 	player.draw_controller.line_complete.connect(on_line_complete)
-	$EnemySpawner.difficulty_up.connect($DifficultyUpAnimation.play.bind("difficulty_up"))
 	%HurtEffect.play("default")
 	score = 0
 	is_game_over = false
@@ -225,6 +225,11 @@ func on_projectile_expire(location: Vector2) -> void:
 	var new_enemy := preload("res://src/game/enemy.tscn").instantiate()
 	new_enemy.position = location
 	$Enemies.add_child(new_enemy)
+
+
+func on_difficulty_up() -> void:
+	$DifficultyUpAnimation.play("difficulty_up")
+	difficulty_up_sound.play()
 
 
 func add_to_score(value: int, label_position: Vector2, chain: int = 0) -> void:
