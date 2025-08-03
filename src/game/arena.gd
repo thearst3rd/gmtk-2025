@@ -29,6 +29,7 @@ func _ready() -> void:
 	%DifficultyLabel.hide()
 	player.draw_controller.line_complete.connect(on_line_complete)
 	$EnemySpawner.difficulty_up.connect($DifficultyUpAnimation.play.bind("difficulty_up"))
+	%HurtEffect.play("default")
 	score = 0
 	is_game_over = false
 
@@ -267,6 +268,7 @@ func on_how_to_play_exited() -> void:
 
 
 func _on_player_player_hit(_current_health: int) -> void:
+	%HurtEffect.play("hurt")
 	for enemy_node in enemies.get_children():
 		if enemy_node.position.distance_squared_to(player.position) <= PLAYER_PROTECTION_BUBBLE_SIZE * PLAYER_PROTECTION_BUBBLE_SIZE:
 			create_explosion(enemy_node.position)
