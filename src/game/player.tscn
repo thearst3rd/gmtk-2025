@@ -277,6 +277,8 @@ _data = {
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 material = SubResource("ShaderMaterial_m2sim")
 collision_mask = 15
+motion_mode = 1
+platform_floor_layers = 0
 script = ExtResource("1_7dijx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
